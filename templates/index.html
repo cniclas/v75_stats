@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V75 Statistik Verktyg</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Filter Data</title>
 </head>
 <body>
+    <form method="post">
+        <label for="bana">Bana (comma-separated):</label>
+        <input type="text" id="bana" name="bana" placeholder="e.g., Kalmar, Halmstad">
 
-<div class="container">
-  <form id="simpleForm">
-    <div class="title-section">
-      <label for="title">Title Here</label>
-      <input type="text" id="title" name="title">
-    </div>
+        <label for="omsattning_start">Omsättning Start:</label>
+        <input type="number" id="omsattning_start" name="omsattning_start" step="any" placeholder="0">
 
-    <div class="age-interval-section">
-      <label for="ageFrom">Age interval from</label>
-      <input type="number" id="ageFrom" name="ageFrom">
-      <label for="ageTo">to</label>
-      <input type="number" id="ageTo" name="ageTo">
-    </div>
+        <label for="omsattning_end">Omsättning End:</label>
+        <input type="number" id="omsattning_end" name="omsattning_end" step="any" placeholder="Max">
 
-    <div class="submit-section">
-      <button type="submit" id="submitBtn">Find</button>
-    </div>
-  </form>
-</div>
+        <label for="ratt7_start">7ratt Start:</label>
+        <input type="number" id="ratt7_start" name="ratt7_start" step="any" placeholder="0">
 
-<script src="script.js"></script>
+        <label for="ratt7_end">7ratt End:</label>
+        <input type="number" id="ratt7_end" name="ratt7_end" step="any" placeholder="Max">
+
+        <!-- Add more scalar fields in the same pattern -->
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <p>{{ relevant_entries }}/{{ total_entries }} are relevant.</p>
 </body>
 </html>

@@ -9,6 +9,9 @@ app = Flask(__name__)
 # Read the CSV file into a Pandas DataFrame
 df = pd.read_csv('data\data.csv', header=0, parse_dates=['Datum'])
 
+# Get unique 'Bana' values
+unique_bana_values = df['Bana'].unique().tolist()
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     total_entries = len(df)
@@ -39,7 +42,7 @@ def home():
             filtered_df = filter_dataframe(df, **filter_args)
             relevant_entries = len(filtered_df)
 
-    return render_template('index.html', relevant_entries=relevant_entries, total_entries=total_entries)
+    return render_template('index.html', unique_bana_values=unique_bana_values, relevant_entries=relevant_entries, total_entries=total_entries)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -78,6 +78,12 @@
         </div>
       </div>
 
+      <!-- Inkludera Jackpots checkbox -->
+      <div class="form-section">
+        <input type="checkbox" id="inkludera_jackpots" name="inkludera_jackpots" {{ 'checked' if request.form.get('inkludera_jackpots') else '' }} />
+        <label for="inkludera_jackpots">Inkludera Jackpots</label>
+      </div>
+
       <button type="submit" class="button">Filter</button>
     </form>
 
@@ -87,22 +93,20 @@
     <div class="statistics">
       <h2>Statistik:</h2>
       {% if statistics %}
-          <div class="stats-container">
-              {% for field, field_stats in statistics.items() %}
-                  <div class="stat-row">
-                      <div class="stat-field">{{ field }}</div>
-                      <div class="stat">Min: {{ field_stats['min'] }}</div>
-                      <div class="stat">Max: {{ field_stats['max'] }}</div>
-                      <div class="stat">Medel: {{ field_stats['avg'] }}</div>
-                      <div class="stat">Summa: {{ field_stats['sum'] }}</div>
-                  </div>
-              {% endfor %}
-          </div>
+        <div class="stats-container">
+          {% for field, field_stats in statistics.items() %}
+            <div class="stat-row">
+              <div class="stat-field">{{ field }}</div>
+              <div class="stat">Min: {{ field_stats['min'] }}</div>
+              <div class="stat">Max: {{ field_stats['max'] }}</div>
+              <div class="stat">Medel: {{ field_stats['avg'] }}</div>
+              <div class="stat">Summa: {{ field_stats['sum'] }}</div>
+            </div>
+          {% endfor %}
+        </div>
       {% else %}
-          <p>No statistics to display. Apply filters to view statistics.</p>
+        <p>No statistics to display. Apply filters to view statistics.</p>
       {% endif %}
-  </div>
-
-    
+    </div>
   </body>
 </html>

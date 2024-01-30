@@ -51,6 +51,10 @@ def home():
                 start = float(start) if start else 0  # Default start to 0 if blank
                 end = float(end) if end else float('inf')  # Default end to infinity if blank
                 filter_args[field] = [start, end]
+                
+        # Handle jackpot boolean
+        filter_args['Inkludera Jackpots'] = 'inkludera_jackpots' in request.form
+        # The variable inkludera_jackpots will be True if the checkbox was checked, and False otherwise.
 
         # Filter the dataframe based on inputs
         if filter_args:

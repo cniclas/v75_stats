@@ -27,6 +27,36 @@
         </div>
         <div class="input-pair">
           <div class="input-group">
+            <label for="7ratt_min">Utdelning 7 rätt Min:</label>
+            <input type="number" id="7ratt_min" name="7ratt_min" step="any" placeholder="0" value="{{ request.form.get('7ratt_min', '') }}" />
+          </div>
+          <div class="input-group">
+            <label for="7ratt_max">Utdelning 7 rätt Max:</label>
+            <input type="number" id="7ratt_max" name="7ratt_max" step="any" placeholder="Max" value="{{ request.form.get('7ratt_max', '') }}" />
+          </div>
+        </div>
+        <div class="input-pair">
+          <div class="input-group">
+            <label for="6ratt_min">Utdelning 6 rätt Min:</label>
+            <input type="number" id="6ratt_min" name="6ratt_min" step="any" placeholder="0" value="{{ request.form.get('6ratt_min', '') }}" />
+          </div>
+          <div class="input-group">
+            <label for="6ratt_max">Utdelning 6 rätt Max:</label>
+            <input type="number" id="6ratt_max" name="6ratt_max" step="any" placeholder="Max" value="{{ request.form.get('6ratt_max', '') }}" />
+          </div>
+        </div>
+        <div class="input-pair">
+          <div class="input-group">
+            <label for="5ratt_min">Utdelning 5 rätt Min:</label>
+            <input type="number" id="5ratt_min" name="5ratt_min" step="any" placeholder="0" value="{{ request.form.get('5ratt_min', '') }}" />
+          </div>
+          <div class="input-group">
+            <label for="5ratt_max">Utdelning 5 rätt Max:</label>
+            <input type="number" id="5ratt_max" name="5ratt_max" step="any" placeholder="Max" value="{{ request.form.get('5ratt_max', '') }}" />
+          </div>
+        </div>
+        <div class="input-pair">
+          <div class="input-group">
             <label for="Omsattning_min">Omsättning Min:</label>
             <input type="number" id="Omsattning_min" name="Omsattning_min" step="any" placeholder="0" value="{{ request.form.get('Omsattning_min', '') }}" />
           </div>
@@ -35,7 +65,17 @@
             <input type="number" id="Omsattning_max" name="Omsattning_max" step="any" placeholder="Max" value="{{ request.form.get('Omsattning_max', '') }}" />
           </div>
         </div>
-        <!-- Repeat the above pattern for other scalar fields -->
+
+        <div class="input-pair">
+          <div class="input-group">
+            <label for="AntalSystem_min">Antal System Min:</label>
+            <input type="number" id="AntalSystem_min" name="AntalSystem_min" step="any" placeholder="0" value="{{ request.form.get('AntalSystem_min', '') }}" />
+          </div>
+          <div class="input-group">
+            <label for="AntalSystem_max">Antal System Max:</label>
+            <input type="number" id="AntalSystem_max" name="AntalSystem_max" step="any" placeholder="Max" value="{{ request.form.get('AntalSystem_max', '') }}" />
+          </div>
+        </div>
       </div>
 
       <button type="submit" class="button">Filter</button>

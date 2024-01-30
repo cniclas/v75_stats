@@ -69,3 +69,32 @@ body {
   font-size: 18px;
   margin-top: 20px;
 }
+
+.statistics {
+  margin-top: 20px;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.stat-field {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.stat {
+  margin-right: 15px;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

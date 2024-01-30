@@ -27,32 +27,32 @@
         </div>
         <div class="input-pair">
           <div class="input-group">
-            <label for="7ratt_min">Utdelning 7 rätt Min:</label>
-            <input type="number" id="7ratt_min" name="7ratt_min" step="any" placeholder="0" value="{{ request.form.get('7ratt_min', '') }}" />
+            <label for="sju_ratt_min">Utdelning 7 rätt Min:</label>
+            <input type="number" id="sju_ratt_min" name="sju_ratt_min" step="any" placeholder="0" value="{{ request.form.get('sju_ratt_min', '') }}" />
           </div>
           <div class="input-group">
-            <label for="7ratt_max">Utdelning 7 rätt Max:</label>
-            <input type="number" id="7ratt_max" name="7ratt_max" step="any" placeholder="Max" value="{{ request.form.get('7ratt_max', '') }}" />
-          </div>
-        </div>
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="6ratt_min">Utdelning 6 rätt Min:</label>
-            <input type="number" id="6ratt_min" name="6ratt_min" step="any" placeholder="0" value="{{ request.form.get('6ratt_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="6ratt_max">Utdelning 6 rätt Max:</label>
-            <input type="number" id="6ratt_max" name="6ratt_max" step="any" placeholder="Max" value="{{ request.form.get('6ratt_max', '') }}" />
+            <label for="sju_ratt_max">Utdelning 7 rätt Max:</label>
+            <input type="number" id="sju_ratt_max" name="sju_ratt_max" step="any" placeholder="Max" value="{{ request.form.get('sju_ratt_max', '') }}" />
           </div>
         </div>
         <div class="input-pair">
           <div class="input-group">
-            <label for="5ratt_min">Utdelning 5 rätt Min:</label>
-            <input type="number" id="5ratt_min" name="5ratt_min" step="any" placeholder="0" value="{{ request.form.get('5ratt_min', '') }}" />
+            <label for="sex_ratt_min">Utdelning 6 rätt Min:</label>
+            <input type="number" id="sex_ratt_min" name="sex_ratt_min" step="any" placeholder="0" value="{{ request.form.get('sex_ratt_min', '') }}" />
           </div>
           <div class="input-group">
-            <label for="5ratt_max">Utdelning 5 rätt Max:</label>
-            <input type="number" id="5ratt_max" name="5ratt_max" step="any" placeholder="Max" value="{{ request.form.get('5ratt_max', '') }}" />
+            <label for="sex_ratt_max">Utdelning 6 rätt Max:</label>
+            <input type="number" id="sex_ratt_max" name="sex_ratt_max" step="any" placeholder="Max" value="{{ request.form.get('sex_ratt_max', '') }}" />
+          </div>
+        </div>
+        <div class="input-pair">
+          <div class="input-group">
+            <label for="fem_ratt_min">Utdelning 5 rätt Min:</label>
+            <input type="number" id="fem_ratt_min" name="fem_ratt_min" step="any" placeholder="0" value="{{ request.form.get('fem_ratt_min', '') }}" />
+          </div>
+          <div class="input-group">
+            <label for="fem_ratt_max">Utdelning 5 rätt Max:</label>
+            <input type="number" id="fem_ratt_max" name="fem_ratt_max" step="any" placeholder="Max" value="{{ request.form.get('fem_ratt_max', '') }}" />
           </div>
         </div>
         <div class="input-pair">
@@ -81,6 +81,28 @@
       <button type="submit" class="button">Filter</button>
     </form>
 
-    <p class="result-text">{{ relevant_entries }}/{{ total_entries }} are relevant.</p>
+    <!-- Displaying Statistics -->
+    <p class="result-text">{{ relevant_entries }}/{{ total_entries }} data punkter använda.</p>
+
+    <div class="statistics">
+      <h2>Statistik:</h2>
+      {% if statistics %}
+          <div class="stats-container">
+              {% for field, field_stats in statistics.items() %}
+                  <div class="stat-row">
+                      <div class="stat-field">{{ field }}</div>
+                      <div class="stat">Min: {{ field_stats['min'] }}</div>
+                      <div class="stat">Max: {{ field_stats['max'] }}</div>
+                      <div class="stat">Medel: {{ field_stats['avg'] }}</div>
+                      <div class="stat">Summa: {{ field_stats['sum'] }}</div>
+                  </div>
+              {% endfor %}
+          </div>
+      {% else %}
+          <p>No statistics to display. Apply filters to view statistics.</p>
+      {% endif %}
+  </div>
+
+    
   </body>
 </html>

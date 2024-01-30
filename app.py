@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 from data_filter import filter_dataframe
+from calc_stats import calc_stats
 from datetime import datetime
 
 app = Flask(__name__)
@@ -15,6 +16,7 @@ unique_bana_values = df['Bana'].unique().tolist()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    statistics = {}
     total_entries = len(df)
     relevant_entries = total_entries
 
@@ -41,7 +43,7 @@ def home():
         filter_args['Datum'] = [datum_start, datum_end]
             
         # Handle scalar field inputs
-        scalar_fields = ['7ratt', '6ratt', '5ratt', 'Omsattning', 'AntalSystem']  # Add more scalar fields as needed
+        scalar_fields = ['sju_ratt', 'sex_ratt', 'fem_ratt', 'Omsattning', 'AntalSystem']  # Add more scalar fields as needed
         for field in scalar_fields:
             start = request.form.get(f'{field}_min', None)
             end = request.form.get(f'{field}_max', None)
@@ -54,8 +56,10 @@ def home():
         if filter_args:
             filtered_df = filter_dataframe(df, **filter_args)
             relevant_entries = len(filtered_df)
+            
+        statistics = calc_stats(filtered_df)
 
-    return render_template('index.html', relevant_entries=relevant_entries, total_entries=total_entries, request=request)
+    return render_template('index.html', statistics=statistics, relevant_entries=relevant_entries, total_entries=total_entries, request=request)
 
 if __name__ == '__main__':
     app.run(debug=True)

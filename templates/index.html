@@ -27,53 +27,53 @@
         </div>
         <div class="input-pair">
           <div class="input-group">
-            <label for="sju_ratt_min">Utdelning 7 rätt Min:</label>
-            <input type="number" id="sju_ratt_min" name="sju_ratt_min" step="any" placeholder="0" value="{{ request.form.get('sju_ratt_min', '') }}" />
+            <label for="7 Rätt_min">Utdelning 7 rätt Min:</label>
+            <input type="number" id="7 Rätt_min" name="7 Rätt_min" step="any" placeholder="0" value="{{ request.form.get('7 Rätt_min', '') }}" />
           </div>
           <div class="input-group">
-            <label for="sju_ratt_max">Utdelning 7 rätt Max:</label>
-            <input type="number" id="sju_ratt_max" name="sju_ratt_max" step="any" placeholder="Max" value="{{ request.form.get('sju_ratt_max', '') }}" />
-          </div>
-        </div>
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="sex_ratt_min">Utdelning 6 rätt Min:</label>
-            <input type="number" id="sex_ratt_min" name="sex_ratt_min" step="any" placeholder="0" value="{{ request.form.get('sex_ratt_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="sex_ratt_max">Utdelning 6 rätt Max:</label>
-            <input type="number" id="sex_ratt_max" name="sex_ratt_max" step="any" placeholder="Max" value="{{ request.form.get('sex_ratt_max', '') }}" />
+            <label for="7 Rätt_max">Utdelning 7 rätt Max:</label>
+            <input type="number" id="7 Rätt_max" name="7 Rätt_max" step="any" placeholder="Max" value="{{ request.form.get('7 Rätt_max', '') }}" />
           </div>
         </div>
         <div class="input-pair">
           <div class="input-group">
-            <label for="fem_ratt_min">Utdelning 5 rätt Min:</label>
-            <input type="number" id="fem_ratt_min" name="fem_ratt_min" step="any" placeholder="0" value="{{ request.form.get('fem_ratt_min', '') }}" />
+            <label for="6 Rätt_min">Utdelning 6 rätt Min:</label>
+            <input type="number" id="6 Rätt_min" name="6 Rätt_min" step="any" placeholder="0" value="{{ request.form.get('6 Rätt_min', '') }}" />
           </div>
           <div class="input-group">
-            <label for="fem_ratt_max">Utdelning 5 rätt Max:</label>
-            <input type="number" id="fem_ratt_max" name="fem_ratt_max" step="any" placeholder="Max" value="{{ request.form.get('fem_ratt_max', '') }}" />
+            <label for="6 Rätt_max">Utdelning 6 rätt Max:</label>
+            <input type="number" id="6 Rätt_max" name="6 Rätt_max" step="any" placeholder="Max" value="{{ request.form.get('6 Rätt_max', '') }}" />
           </div>
         </div>
         <div class="input-pair">
           <div class="input-group">
-            <label for="Omsattning_min">Omsättning Min:</label>
-            <input type="number" id="Omsattning_min" name="Omsattning_min" step="any" placeholder="0" value="{{ request.form.get('Omsattning_min', '') }}" />
+            <label for="5 Rätt_min">Utdelning 5 rätt Min:</label>
+            <input type="number" id="5 Rätt_min" name="5 Rätt_min" step="any" placeholder="0" value="{{ request.form.get('5 Rätt_min', '') }}" />
           </div>
           <div class="input-group">
-            <label for="Omsattning_max">Omsättning Max:</label>
-            <input type="number" id="Omsattning_max" name="Omsattning_max" step="any" placeholder="Max" value="{{ request.form.get('Omsattning_max', '') }}" />
+            <label for="5 Rätt_max">Utdelning 5 rätt Max:</label>
+            <input type="number" id="5 Rätt_max" name="5 Rätt_max" step="any" placeholder="Max" value="{{ request.form.get('5 Rätt_max', '') }}" />
+          </div>
+        </div>
+        <div class="input-pair">
+          <div class="input-group">
+            <label for="Omsättning_min">Omsättning Min:</label>
+            <input type="number" id="Omsättning_min" name="Omsättning_min" step="any" placeholder="0" value="{{ request.form.get('Omsättning_min', '') }}" />
+          </div>
+          <div class="input-group">
+            <label for="Omsättning_max">Omsättning Max:</label>
+            <input type="number" id="Omsättning_max" name="Omsättning_max" step="any" placeholder="Max" value="{{ request.form.get('Omsättning_max', '') }}" />
           </div>
         </div>
 
         <div class="input-pair">
           <div class="input-group">
-            <label for="AntalSystem_min">Antal System Min:</label>
-            <input type="number" id="AntalSystem_min" name="AntalSystem_min" step="any" placeholder="0" value="{{ request.form.get('AntalSystem_min', '') }}" />
+            <label for="Antal System_min">Antal System Min:</label>
+            <input type="number" id="Antal System_min" name="Antal System_min" step="any" placeholder="0" value="{{ request.form.get('Antal System_min', '') }}" />
           </div>
           <div class="input-group">
-            <label for="AntalSystem_max">Antal System Max:</label>
-            <input type="number" id="AntalSystem_max" name="AntalSystem_max" step="any" placeholder="Max" value="{{ request.form.get('AntalSystem_max', '') }}" />
+            <label for="Antal System_max">Antal System Max:</label>
+            <input type="number" id="Antal System_max" name="Antal System_max" step="any" placeholder="Max" value="{{ request.form.get('Antal System_max', '') }}" />
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
     </form>
 
     <!-- Displaying Statistics -->
-    <p class="result-text">{{ relevant_entries }}/{{ total_entries }} data punkter använda.</p>
+    <p class="result-text">{{ relevant_entries }}/{{ total_entries }} relevanta data.</p>
 
     <div class="statistics">
       <h2>Statistik:</h2>

@@ -21,7 +21,7 @@ def calc_stats(df):
     stats = {}
     
     # List of scalar fields for which to calculate statistics
-    scalar_fields = ['sju_ratt', 'sex_ratt', 'fem_ratt', 'Omsattning', 'AntalSystem']
+    scalar_fields = ['7 Rätt', '6 Rätt', '5 Rätt', 'Omsättning', 'Antal System']
     
     for field in scalar_fields:
         if field in df.columns:

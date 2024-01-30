@@ -43,7 +43,7 @@ def home():
         filter_args['Datum'] = [datum_start, datum_end]
             
         # Handle scalar field inputs
-        scalar_fields = ['sju_ratt', 'sex_ratt', 'fem_ratt', 'Omsattning', 'AntalSystem']  # Add more scalar fields as needed
+        scalar_fields = ['7 Rätt', '6 Rätt', '5 Rätt', 'Omsättning', 'Antal System']  # Add more scalar fields as needed
         for field in scalar_fields:
             start = request.form.get(f'{field}_min', None)
             end = request.form.get(f'{field}_max', None)

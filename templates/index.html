@@ -18,14 +18,14 @@
       <div class="form-section">
         <div class="input-pair">
           <div class="input-group">
-            <label for="datum_start">Datum Start:</label>
-            <input type="date" id="datum_start" name="datum_start" value="{{ request.form.get('datum_start', '') }}" />
+              <label for="datum_start">Datum Start:</label>
+              <input type="date" id="datum_start" name="datum_start" min="{{ min_date }}" max="{{ max_date }}" value="{{ request.form.get('datum_start', min_date) }}" />
           </div>
           <div class="input-group">
-            <label for="datum_end">Datum End:</label>
-            <input type="date" id="datum_end" name="datum_end" value="{{ request.form.get('datum_end', '') }}" />
+              <label for="datum_end">Datum End:</label>
+              <input type="date" id="datum_end" name="datum_end" min="{{ min_date }}" max="{{ max_date }}" value="{{ request.form.get('datum_end', max_date) }}" />
           </div>
-        </div>
+      </div>
         <div class="input-pair">
           <div class="input-group">
             <label for="7 Rätt_min">Utdelning 7 rätt Min:</label>

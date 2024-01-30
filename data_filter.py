@@ -4,7 +4,7 @@ def filter_dataframe(df, **kwargs):
     query_parts = []
 
     for field, value in kwargs.items():
-        if field == 'Datum' and isinstance(value, tuple):
+        if field == 'Datum':
             # Ensure dates are in datetime format
             start_date, end_date = pd.to_datetime(value[0]), pd.to_datetime(value[1])
             query_parts.append(df[field].between(start_date, end_date))

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 from data_filter import filter_dataframe
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -20,18 +21,30 @@ def home():
     if request.method == 'POST':
         # Get Bana input and split by comma, strip whitespace
         bana_input = request.form.get('bana', '')
-        bana_list = [b.strip() for b in bana_input.split(',') if b.strip()]
+        req_banor = [b.strip() for b in bana_input.split(',') if b.strip()]
 
         # Construct filter arguments, considering blank inputs
         filter_args = {}
-        if bana_list:
-            filter_args['Bana'] = bana_list
-        
+        if req_banor:
+            filter_args['Bana'] = req_banor
+            
+        # Handle date
+        datum_start = request.form.get('datum_start', '')
+        datum_end = request.form.get('datum_end', '')
+
+        # Convert date strings to datetime objects
+        if datum_start:
+            datum_start = datetime.strptime(datum_start, '%Y-%m-%d')
+        if datum_end:
+            datum_end = datetime.strptime(datum_end, '%Y-%m-%d')
+            
+        filter_args['Datum'] = [datum_start, datum_end]
+            
         # Handle scalar field inputs
         scalar_fields = ['Omsattning', '7ratt']  # Add more scalar fields as needed
         for field in scalar_fields:
-            start = request.form.get(f'{field}_start', None)
-            end = request.form.get(f'{field}_end', None)
+            start = request.form.get(f'{field}_min', None)
+            end = request.form.get(f'{field}_max', None)
             if start or end:  # If either start or end is provided
                 start = float(start) if start else 0  # Default start to 0 if blank
                 end = float(end) if end else float('inf')  # Default end to infinity if blank
@@ -42,7 +55,7 @@ def home():
             filtered_df = filter_dataframe(df, **filter_args)
             relevant_entries = len(filtered_df)
 
-    return render_template('index.html', unique_bana_values=unique_bana_values, relevant_entries=relevant_entries, total_entries=total_entries)
+    return render_template('index.html', relevant_entries=relevant_entries, total_entries=total_entries, request=request)
 
 if __name__ == '__main__':
     app.run(debug=True)

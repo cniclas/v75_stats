@@ -11,6 +11,7 @@
       <div class="form-section">
         <label for="bana">Banor:</label>
         <input type="text" id="bana" name="bana" class="text-array-input" placeholder="e.g., Kalmar, Halmstad (Lämnas blank för alla)" value="{{ request.form.get('bana', '') }}" />
+        <button type="button" id="all-banor" onclick="populateAllBanor()">Alla Banor</button>
       </div>
 
       <!-- Scalar field inputs -->
@@ -109,4 +110,14 @@
       {% endif %}
     </div>
   </body>
+
+  <script>
+    function populateAllBanor() {
+        // Assuming you have an array of all available banor
+        var allBanor = {{ alla_banor|safe }}; // Make sure to pass this from your Flask route
+
+        // Join all banor with comma and space, and set it as the input value
+        document.getElementById('bana').value = allBanor.join(', ');
+    }
+</script>
 </html>

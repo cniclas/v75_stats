@@ -12,7 +12,7 @@ app = Flask(__name__)
 df = pd.read_csv('data\data.csv', header=0, parse_dates=['Datum'])
 
 # Get unique 'Bana' values
-unique_bana_values = df['Bana'].unique().tolist()
+alla_banor = df['Bana'].unique().tolist()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -63,7 +63,7 @@ def home():
             
         statistics = calc_stats(filtered_df)
 
-    return render_template('index.html', statistics=statistics, relevant_entries=relevant_entries, total_entries=total_entries, request=request)
+    return render_template('index.html', statistics=statistics, alla_banor=alla_banor, relevant_entries=relevant_entries, total_entries=total_entries, request=request)
 
 if __name__ == '__main__':
     app.run(debug=True)

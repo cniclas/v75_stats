@@ -26,9 +26,12 @@
       <!-- Bana input -->
       <div class="form-section">
         <label for="bana">Banor:</label>
-        <input type="text" id="bana" name="bana" class="text-array-input" placeholder="e.g., Kalmar, Halmstad (Lämnas blank för alla)" value="{{ request.form.get('bana', '') }}" />
-        <button type="button" id="all-banor" onclick="populateAllBanor()">Alla Banor</button>
-      </div>
+        <div class="input-group" style="display: flex; align-items: center;">
+            <input type="text" id="bana" name="bana" class="text-array-input" placeholder="e.g., Kalmar, Halmstad (Lämnas blank för alla)" value="{{ request.form.get('bana', '') }}" />
+            <button type="button" id="all-banor" onclick="populateAllBanor()" style="margin-left: 10px;">Alla Banor</button>
+        </div>
+    </div>
+    
 
       <!-- Scalar field inputs -->
       <div class="form-section">

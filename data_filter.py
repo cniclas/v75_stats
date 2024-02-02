@@ -15,6 +15,9 @@ def filter_dataframe(df, **kwargs):
             # Ensure dates are in datetime format
             start_date, end_date = pd.to_datetime(value[0]), pd.to_datetime(value[1])
             query_parts.append(df[field].between(start_date, end_date))
+        elif field == 'Bana':
+            # Filter on all strings in value
+            query_parts.append(df[field].isin(value))
         elif isinstance(value, list) and field != 'Datum':
             min_val, max_val = min(value), max(value)
             if field == '7 Rätt' and f_add_jackpots:

@@ -11,11 +11,11 @@
       <div style="display: flex; align-items: center;">
           <!-- Curtain menu -->
           <div class="curtain-menu">
-              <label for="race-type">Speltyp:</label>
-              <select id="race-type" name="race-type">
-                  <option value="v75">V75</option>
-                  <option value="v86">V86</option>
-              </select>
+            <label for="race-type">Speltyp:</label>
+            <select id="race-type" name="race-type">
+              <option value="v75" {% if request.form.get('race-type') == 'v75' %}selected{% endif %}>V75</option>
+              <option value="v86" {% if request.form.get('race-type') == 'v86' %}selected{% endif %}>V86</option>
+            </select>
           </div>
           <!-- Load Data button -->
           <button type="submit" class="button">Load Data</button>

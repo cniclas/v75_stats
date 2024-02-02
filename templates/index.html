@@ -6,7 +6,23 @@
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
-    <form method="post">
+
+    <form method="post" action="/load-data">
+      <div style="display: flex; align-items: center;">
+          <!-- Curtain menu -->
+          <div class="curtain-menu">
+              <label for="race-type">Speltyp:</label>
+              <select id="race-type" name="race-type">
+                  <option value="v75">V75</option>
+                  <option value="v86">V86</option>
+              </select>
+          </div>
+          <!-- Load Data button -->
+          <button type="submit" class="button">Load Data</button>
+      </div>
+    </form>
+  
+    <form method="post" action="/update-stats">
       <!-- Bana input -->
       <div class="form-section">
         <label for="bana">Banor:</label>

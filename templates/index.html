@@ -104,6 +104,10 @@
         <label for="inkludera_jackpots">Inkludera Jackpots</label>
       </div>
 
+      <div class="form-section textbox-container">
+        <button type="button" id="add-textbox">Add Textbox</button>
+      </div>
+
       <button type="submit" class="button">Filter</button>
     </form>
 
@@ -138,5 +142,27 @@
         // Join all banor with comma and space, and set it as the input value
         document.getElementById('bana').value = allBanor.join(', ');
     }
+
+    // Add Textbox functionality
+    const addTextboxButton = document.getElementById('add-textbox');
+    const textboxContainer = document.querySelector('.textbox-container');
+    let textboxCount = 0;
+
+    addTextboxButton.addEventListener('click', () => {
+        textboxCount++;
+
+        const textbox = document.createElement('input');
+        textbox.type = 'text';
+        textbox.id = `textbox-${textboxCount}`;
+        // Add a class for styling (optional)
+        textbox.classList.add('textbox');
+
+        const label = document.createElement('label');
+        label.htmlFor = `textbox-${textboxCount}`;
+        label.textContent = `Textbox ${textboxCount}`;
+
+        textboxContainer.appendChild(label);
+        textboxContainer.appendChild(textbox);
+    });
 </script>
 </html>

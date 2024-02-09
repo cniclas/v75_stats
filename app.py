@@ -26,9 +26,9 @@ def load_data():
     race_type = request.form.get('race-type')
     
     if race_type == 'v75':
-        df = pd.read_csv('data\data.csv', header=0, parse_dates=['Datum'])
+        df = pd.read_csv('data\data_v75.csv', header=0, parse_dates=['Datum'])
     elif race_type == 'v86':
-        df = pd.read_csv('data\data.csv', header=0, parse_dates=['Datum'])
+        df = pd.read_csv('data\data_v86.csv', header=0, parse_dates=['Datum'])
     else:
         df = pd.DataFrame()  # Reset to an empty DataFrame if race type is unexpected
 

@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Data Loader</title>
+</head>
+<body>
+    <h1>Data Loader</h1>
+    <form method="POST" action="/load_data">
+        <input type="radio" id="v75" name="data_version" value="v75" {% if selected_version == "v75" %}checked{% endif %}>
+        <label for="v75">v75 Data</label><br>
+        <input type="radio" id="v86" name="data_version" value="v86" {% if selected_version == "v86" %}checked{% endif %}>
+        <label for="v86">v86 Data</label><br>
+        <button type="submit">Load Data</button>
+    </form>
+    </body>
+  <head>
     <title>Interval Filtering</title>
   </head>
   <body>

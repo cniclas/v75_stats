@@ -18,13 +18,15 @@
   </head>
   <body>
     <h1>Filter Data</h1>
-    <form method="POST">
-      {{ interval_inputs|safe }}
-      <button type="submit">Filter</button>
-    </form>
+    
 
     <button id="add-filter">Add Filter</button>
     <div id="filter-container"></div>
     <script src="static/script.js"></script>
+
+    <form method="POST">
+      {{ interval_inputs|safe }}
+      <button type="submit">Filter</button>
+    </form>
   </body>
 </html>

@@ -1,168 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>v75/v86 Statistik Verktyg</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <title>Interval Filtering</title>
   </head>
   <body>
-
-    <form method="post" action="/load-data">
-      <div style="display: flex; align-items: center;">
-          <!-- Curtain menu -->
-          <div class="curtain-menu">
-            <label for="race-type">Speltyp:</label>
-            <select id="race-type" name="race-type">
-              <option value="v75" {% if request.form.get('race-type') == 'v75' %}selected{% endif %}>V75</option>
-              <option value="v86" {% if request.form.get('race-type') == 'v86' %}selected{% endif %}>V86</option>
-            </select>
-          </div>
-          <!-- Load Data button -->
-          <button type="submit" class="button">Load Data</button>
-      </div>
-    </form>
-  
-    <form method="post" action="/update-stats">
-      <!-- Bana input -->
-      <div class="form-section">
-        <label for="bana">Banor:</label>
-        <div class="input-group" style="display: flex; align-items: center;">
-            <input type="text" id="bana" name="bana" class="text-array-input" placeholder="e.g., Kalmar, Halmstad (Lämnas blank för alla)" value="{{ request.form.get('bana', '') }}" />
-            <button type="button" id="all-banor" onclick="populateAllBanor()" style="margin-left: 10px;">Alla Banor</button>
-        </div>
-        <div class="input-pair">
-          <div class="input-group">
-              <label for="datum_start">Datum Start:</label>
-              <input type="date" id="datum_start" name="datum_start" min="{{ min_date }}" max="{{ max_date }}" value="{{ request.form.get('datum_start', min_date) }}" />
-          </div>
-          <div class="input-group">
-              <label for="datum_end">Datum End:</label>
-              <input type="date" id="datum_end" name="datum_end" min="{{ min_date }}" max="{{ max_date }}" value="{{ request.form.get('datum_end', max_date) }}" />
-          </div>
-      </div>
-    </div>
-    
-
-      <!-- Scalar field inputs -->
-      <div class="form-section">
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="7 Rätt_min">Utdelning 7 rätt Min:</label>
-            <input type="number" id="7 Rätt_min" name="7 Rätt_min" step="any" placeholder="0" value="{{ request.form.get('7 Rätt_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="7 Rätt_max">Utdelning 7 rätt Max:</label>
-            <input type="number" id="7 Rätt_max" name="7 Rätt_max" step="any" placeholder="Max" value="{{ request.form.get('7 Rätt_max', '') }}" />
-          </div>
-        </div>
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="6 Rätt_min">Utdelning 6 rätt Min:</label>
-            <input type="number" id="6 Rätt_min" name="6 Rätt_min" step="any" placeholder="0" value="{{ request.form.get('6 Rätt_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="6 Rätt_max">Utdelning 6 rätt Max:</label>
-            <input type="number" id="6 Rätt_max" name="6 Rätt_max" step="any" placeholder="Max" value="{{ request.form.get('6 Rätt_max', '') }}" />
-          </div>
-        </div>
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="5 Rätt_min">Utdelning 5 rätt Min:</label>
-            <input type="number" id="5 Rätt_min" name="5 Rätt_min" step="any" placeholder="0" value="{{ request.form.get('5 Rätt_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="5 Rätt_max">Utdelning 5 rätt Max:</label>
-            <input type="number" id="5 Rätt_max" name="5 Rätt_max" step="any" placeholder="Max" value="{{ request.form.get('5 Rätt_max', '') }}" />
-          </div>
-        </div>
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="Omsättning_min">Omsättning Min:</label>
-            <input type="number" id="Omsättning_min" name="Omsättning_min" step="any" placeholder="0" value="{{ request.form.get('Omsättning_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="Omsättning_max">Omsättning Max:</label>
-            <input type="number" id="Omsättning_max" name="Omsättning_max" step="any" placeholder="Max" value="{{ request.form.get('Omsättning_max', '') }}" />
-          </div>
-        </div>
-
-        <div class="input-pair">
-          <div class="input-group">
-            <label for="Antal System_min">Antal System Min:</label>
-            <input type="number" id="Antal System_min" name="Antal System_min" step="any" placeholder="0" value="{{ request.form.get('Antal System_min', '') }}" />
-          </div>
-          <div class="input-group">
-            <label for="Antal System_max">Antal System Max:</label>
-            <input type="number" id="Antal System_max" name="Antal System_max" step="any" placeholder="Max" value="{{ request.form.get('Antal System_max', '') }}" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Inkludera Jackpots checkbox -->
-      <div class="form-section">
-        <input type="checkbox" id="inkludera_jackpots" name="inkludera_jackpots" {{ 'checked' if request.form.get('inkludera_jackpots') else '' }} />
-        <label for="inkludera_jackpots">Inkludera Jackpots</label>
-      </div>
-
-      <div class="form-section textbox-container">
-        <button type="button" id="add-textbox">Add Textbox</button>
-      </div>
-
-      <button type="submit" class="button">Filter</button>
+    <h1>Filter Data</h1>
+    <form method="POST">
+      {{ interval_inputs|safe }}
+      <button type="submit">Filter</button>
     </form>
 
-    <!-- Displaying Statistics -->
-    <p class="result-text">{{ relevant_entries }}/{{ total_entries }} relevanta data.</p>
-
-    <div class="statistics">
-      <h2>Statistik:</h2>
-      {% if statistics %}
-        <div class="stats-container">
-          {% for field, field_stats in statistics.items() %}
-            <div class="stat-row">
-              <div class="stat-field">{{ field }}</div>
-              <div class="stat">Min: {{ field_stats['min'] }}</div>
-              <div class="stat">Max: {{ field_stats['max'] }}</div>
-              <div class="stat">Medel: {{ field_stats['avg'] }}</div>
-              <div class="stat">Summa: {{ field_stats['sum'] }}</div>
-            </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <p>No statistics to display. Apply filters to view statistics.</p>
-      {% endif %}
-    </div>
+    <button id="add-filter">Add Filter</button>
+    <div id="filter-container"></div>
+    <script src="static/script.js"></script>
   </body>
-
-  <script>
-    function populateAllBanor() {
-        // Assuming you have an array of all available banor
-        var allBanor = {{ alla_banor|safe }}; // Make sure to pass this from your Flask route
-
-        // Join all banor with comma and space, and set it as the input value
-        document.getElementById('bana').value = allBanor.join(', ');
-    }
-
-    // Add Textbox functionality
-    const addTextboxButton = document.getElementById('add-textbox');
-    const textboxContainer = document.querySelector('.textbox-container');
-    let textboxCount = 0;
-
-    addTextboxButton.addEventListener('click', () => {
-        textboxCount++;
-
-        const textbox = document.createElement('input');
-        textbox.type = 'text';
-        textbox.id = `textbox-${textboxCount}`;
-        // Add a class for styling (optional)
-        textbox.classList.add('textbox');
-
-        const label = document.createElement('label');
-        label.htmlFor = `textbox-${textboxCount}`;
-        label.textContent = `Textbox ${textboxCount}`;
-
-        textboxContainer.appendChild(label);
-        textboxContainer.appendChild(textbox);
-    });
-</script>
 </html>

@@ -9,23 +9,29 @@ class LocationInput:
         self._selected_strings = available_strings
 
     def generate_html(self):
-        selected_strings_str = ",".join(self._selected_strings)
+        checkboxes_html = ""
+        for string in self.available_strings:
+            checked = "checked" if string in self._selected_strings else ""
+            checkboxes_html += f"""
+                <label>
+                    <input type="checkbox" name="{self.property_name}" value="{string}" {checked}> {string}
+                </label>
+            """
 
-        template = """
-        <div class="input-pair">
-            <label for="{property_name}">Select {label}:</label>
-            <input type="text" id="{property_name}" name="{property_name}" value="{selected_strings_str}" placeholder="Comma-separated values"/>
-        </div>
+        template = f"""
+            <div class="input-pair">
+                <label>{self.label}:</label>
+                {checkboxes_html}
+            </div>
         """
-        return template.format(label=self.label, property_name=self.property_name, selected_strings_str=selected_strings_str)
+        return template
 
     def update(self):
-        selected_strings_str = request.form.get(self.property_name)
-        self._selected_strings = [string.strip() for string in selected_strings_str.split(",")] if selected_strings_str else []
-    
+        selected_strings = request.form.getlist(self.property_name)  # Get list of selected values
+        self._selected_strings = selected_strings
+
     def reset(self):
-        self._selected_strings = self.available_strings[:]  # Copy the entire list
+        self._selected_strings = []
 
     def get_selected_strings(self):
         return self._selected_strings
-

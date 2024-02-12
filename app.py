@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from interval_input import IntervalInput
 from interval_input_jackpot import IntervalInputJackpot
 from data_loader import DataLoader
+from vector_input import VectorInput
 
 app = Flask(__name__)
 
@@ -10,7 +11,10 @@ interval_inputs = []  # Store filter instances globally
 
 @app.route('/')
 def index():
-    return render_template('index.html', interval_inputs=[])  # Initially no filters
+    dummy_field_input = VectorInput("DummyField", 8)
+    html_code = dummy_field_input.generate_html()
+
+    return render_template('index.html', vector_input=html_code, interval_inputs=[])  # Initially no filters
 
 @app.route('/load_data', methods=['POST'])
 def load_data():

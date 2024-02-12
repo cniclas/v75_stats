@@ -28,9 +28,7 @@ def load_data():
 
     data_loader.load_data(filepath)  # Load the selected data
     
-    fieldnames = data_loader.get_field_names()
-    
-    all_filters = init_filters(fieldnames)
+    all_filters = init_filters(data_loader.get_data())
     
     all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
 

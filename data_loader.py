@@ -8,7 +8,7 @@ class DataLoader:
     def load_data(self, filepath):
         self.data = pd.read_csv(filepath, parse_dates=["Datum"])
 
-    def get_field_names(self):
+    def get_fieldnames(self):
         return self.data.columns.tolist()
         
     def get_data(self):

@@ -2,11 +2,11 @@ from datetime import datetime
 from flask import request
 
 class DateIntervalInput:
-    def __init__(self, label_in):
+    def __init__(self, label_in, min_date):
         self.label = label_in
         self.property_name = label_in.replace(" ", "_")
-        self._min_date = None
-        self._max_date = None
+        self._min_date = min_date
+        self._max_date = datetime.today()
 
     def generate_html(self):
         min_date_str = self._min_date.strftime("%Y-%m-%d") if self._min_date else ""

@@ -48,7 +48,8 @@ def init_filters(data):
             current_filter = LocationInput(name, available_locs)
             all_filters.append(current_filter)
         elif filter_type == 'date':
-            current_filter = DateIntervalInput(name)
+            oldest_date = data['Datum'].min()
+            current_filter = DateIntervalInput(name, oldest_date)
             all_filters.append(current_filter)
         elif filter_type == 'interval':
             current_filter = IntervalInput(name)

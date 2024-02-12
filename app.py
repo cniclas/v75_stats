@@ -7,20 +7,21 @@ from init_template_support import init_filters
 
 app = Flask(__name__)
 
+selected_version = 'v75'
 data_loader = DataLoader()  # Create a DataLoader instance
 all_filters = []
 interval_inputs = []  # Store filter instances globally
 
 @app.route('/')
 def index():
-    return render_template('index.html', selected_version='v75')
+    return render_template('index.html', selected_version=selected_version)
     
 @app.route('/load_data', methods=['POST'])
 def load_data():
     global data_loader, all_filters
-    data_version = request.form.get('data_version')
+    selected_version = request.form.get('data_version')
 
-    if data_version == "v75":
+    if selected_version == "v75":
         filepath = "data/data_v75.csv"
     else:
         filepath = "data/data_v86.csv"
@@ -34,13 +35,17 @@ def load_data():
     all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
 
     # Process or display the loaded data as needed
-    return render_template('index.html', selected_version=data_version, interval_inputs=all_filters_html)
+    return render_template('index.html', selected_version=selected_version, interval_inputs=all_filters_html)
 
 @app.route('/filter_data', methods=['POST'])
 def filter_data():
     global all_filters
-    hej = 4
-    return render_template('index.html')
+    for curr_filter in all_filters:
+        curr_filter.update()
+    all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
+
+    return render_template('index.html', selected_version='v75', interval_inputs=all_filters_html)
+
 
 @app.route('/add_filter')
 def add_filter():

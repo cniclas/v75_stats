@@ -1,3 +1,5 @@
+from flask import request
+
 class VectorInput:
     """
     Generates HTML code for filter options and tracks user selections.
@@ -73,7 +75,7 @@ class VectorInput:
         html += sum_html + interval_html
         return html
 
-    def get_filter_options(self, request):
+    def update(self):
         """
         Gets filter options selected by the user from form data.
 

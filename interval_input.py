@@ -24,7 +24,7 @@ class IntervalInput:
         """
         return template.format(label=self.label, property_name=self.property_name, min_value=min_value, max_value_text=max_value_text)
 
-    def get_values(self):
+    def update(self):
         min_value = request.form.get(f"{self.property_name}_min", None)
         max_value = request.form.get(f"{self.property_name}_max", None)
         max_unlimited = request.form.get(f"{self.property_name}_max_unlimited", None)
@@ -40,4 +40,5 @@ class IntervalInput:
         # You may want to add validation or error handling here
         # to ensure min_value and max_value are valid (e.g., non-negative)
 
+    def get_values(self):
         return self._min_value, self._max_value

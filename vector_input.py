@@ -9,6 +9,7 @@ class VectorInput:
         self.sum_filter_options = {
             "min_sum": "",
             "max_sum": "",
+            "in_nr_races": "",
             "selected_elements": list(range(1, nr_elements + 1))  # Initially all elements selected
         }
         self.interval_filter_options = {
@@ -29,6 +30,9 @@ class VectorInput:
             <input type="number" id="{self.name}_sum_min" name="{self.name}_min_sum" value="{self.sum_filter_options['min_sum']}" style="width: 50px; height: 25px; padding: 5px;">
             -
             <input type="number" id="{self.name}_sum_max" name="{self.name}_max_sum" value="{self.sum_filter_options['max_sum']}" style="width: 50px; height: 25px; padding: 5px;">
+            i 
+            <input type="number" id="{self.name}_in_nr_races" name="{self.name}_in_nr_races" value="{self.sum_filter_options['in_nr_races']}" style="width: 50px; height: 25px; padding: 5px;">
+             av loppen.
         """
         for i in range(1, self.nr_elements + 1):
             checked = "checked" if i in self.sum_filter_options["selected_elements"] else ""

@@ -1,9 +1,9 @@
 from flask import request
 
 class IntervalInput:
-    def __init__(self, label, property_name):
-        self.label = label
-        self.property_name = property_name
+    def __init__(self, label_in):
+        self.label = label_in
+        self.property_name = label_in.replace(" ", "_")
         self._min_value = None
         self._max_value = None
 

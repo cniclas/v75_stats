@@ -2,8 +2,8 @@ from flask import request
 from interval_input import IntervalInput
 
 class IntervalInputJackpot(IntervalInput):
-    def __init__(self, label, property_name):
-        super().__init__(label, property_name)
+    def __init__(self, label):
+        super().__init__(label)
         self._include_jackpots = False
 
     def generate_html(self):

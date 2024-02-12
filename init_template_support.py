@@ -41,10 +41,10 @@ def init_filters(fieldnames):
         filter_type = determine_filter_type(name)
         
         if filter_type == 'interval':
-            current_filter = IntervalInput(name, 'prop')
+            current_filter = IntervalInput(name)
             all_filters.append(current_filter)
         elif filter_type == 'jackpot':
-            current_filter = IntervalInputJackpot(name, 'prop')
+            current_filter = IntervalInputJackpot(name)
         
             all_filters.append(current_filter)
         

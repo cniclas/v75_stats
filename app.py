@@ -3,6 +3,7 @@ from interval_input import IntervalInput
 from interval_input_jackpot import IntervalInputJackpot
 from data_loader import DataLoader
 from vector_input import VectorInput
+from init_template_support import init_filters
 
 app = Flask(__name__)
 
@@ -11,11 +12,8 @@ interval_inputs = []  # Store filter instances globally
 
 @app.route('/')
 def index():
-    dummy_field_input = VectorInput("DummyField", 8)
-    html_code = dummy_field_input.generate_html()
-
-    return render_template('index.html', vector_input=html_code, interval_inputs=[])  # Initially no filters
-
+    return render_template('index.html', selected_version='v75')
+    
 @app.route('/load_data', methods=['POST'])
 def load_data():
     global data_loader
@@ -27,9 +25,16 @@ def load_data():
         filepath = "data/data_v86.csv"
 
     data_loader.load_data(filepath)  # Load the selected data
+    
+    fieldnames = data_loader.get_field_names()
+    
+    all_filters = init_filters(fieldnames)
+    
+    all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
+
 
     # Process or display the loaded data as needed
-    return render_template('index.html', selected_version=data_version)
+    return render_template('index.html', selected_version=data_version, interval_inputs=all_filters_html)
 
 @app.route('/add_filter')
 def add_filter():

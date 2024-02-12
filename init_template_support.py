@@ -45,7 +45,9 @@ def init_filters(fieldnames):
             all_filters.append(current_filter)
         elif filter_type == 'jackpot':
             current_filter = IntervalInputJackpot(name)
-        
+            all_filters.append(current_filter)
+        elif filter_type == 'vector':
+            current_filter = VectorInput(name, nr_max)
             all_filters.append(current_filter)
         
     return all_filters

@@ -18,25 +18,9 @@
   </head>
   <body>
     <h1>Filter Data</h1>
-
-    <button id="add-filter">Add Filter</button>
-    <div id="filter-container"></div>
-    <script src="static/script.js"></script>
-
-    <form method="POST">
+    <form method="POST" action="/filter_data">
       {{ interval_inputs|safe }}
       <button type="submit">Filter</button>
     </form>
-  </body>
-  <head>
-    <title>Filter Data Complex</title>
-  </head>
-  <body>
-      <h1>Filter Options Complex</h1>
-      <form method="POST" action="/filter_data">
-        {# Render the HTML code using Jinja2 #}
-        {{ vector_input | safe }}
-        <button type="submit">Filter Data</button>
-      </form>
   </body>
 </html>

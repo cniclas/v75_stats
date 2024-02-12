@@ -18,7 +18,7 @@ def index():
     
 @app.route('/load_data', methods=['POST'])
 def load_data():
-    global data_loader, all_filters
+    global data_loader, all_filters, selected_version
     selected_version = request.form.get('data_version')
 
     if selected_version == "v75":
@@ -37,12 +37,15 @@ def load_data():
 
 @app.route('/filter_data', methods=['POST'])
 def filter_data():
-    global all_filters
+    global data_loader, all_filters, selected_version
     for curr_filter in all_filters:
         curr_filter.update()
     all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
 
-    return render_template('index.html', selected_version='v75', interval_inputs=all_filters_html)
+    total_entries = len(data_loader.get_data())
+    relevant_entries = total_entries
+    
+    return render_template('index.html', selected_version=selected_version, interval_inputs=all_filters_html, total_data_entries=total_entries, filtered_data_count=relevant_entries)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -50,4 +50,4 @@ class LocationInput:
     
     def filter_data(self, data):
         df = data[data[self.label].isin(self._selected_strings)]
-        return data
+        return df

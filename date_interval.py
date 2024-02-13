@@ -43,3 +43,7 @@ class DateIntervalInput:
 
     def get_values(self):
         return self._min_date, self._max_date
+    
+    def filter_data(self, data):
+        df = data[data[self.label].between(self._min_date, self._max_date, inclusive='both')]
+        return df

@@ -27,18 +27,19 @@ class IntervalInput:
     def update(self):
         min_value = request.form.get(f"{self.property_name}_min", None)
         max_value = request.form.get(f"{self.property_name}_max", None)
-        max_unlimited = request.form.get(f"{self.property_name}_max_unlimited", None)
-
+        
         # Update internal values based on user input
-        self._min_value = min_value if min_value else 0
-        self._max_value = max_value
-
-        # Handle the "No upper limit" checkbox
-        if max_unlimited:
-            self._max_value = float('inf')
+        self._min_value = float(min_value) if min_value else 0
+        self._max_value = float(max_value) if max_value else float('inf')
 
         # You may want to add validation or error handling here
         # to ensure min_value and max_value are valid (e.g., non-negative)
 
+    def filter_data(self, data):
+        min_value = float(self._min_value)
+        max_value = float(self._max_value)
+        df = data[data[self.label].between(min_value, max_value)]
+        return df
+    
     def get_values(self):
         return self._min_value, self._max_value

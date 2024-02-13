@@ -4,7 +4,7 @@ from interval_input import IntervalInput
 class IntervalInputJackpot(IntervalInput):
     def __init__(self, label):
         super().__init__(label)
-        self._include_jackpots = False
+        self._include_jackpots = True
 
     def generate_html(self):
         min_value, max_value = self._min_value, self._max_value
@@ -31,3 +31,10 @@ class IntervalInputJackpot(IntervalInput):
     def update(self):
         super().update()
         self._include_jackpots = request.form.get(f"{self.property_name}_jackpots", None)
+
+    def filter_data(self, data):
+        if self._include_jackpots:
+            df = data[data[self.label].between(self._min_value, self._max_value) | (data[self.label] == 0)]
+        else:
+            df = data[data[self.label].between(self._min_value, self._max_value)]
+        return df

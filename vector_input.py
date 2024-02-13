@@ -103,3 +103,6 @@ class VectorInput:
         }
 
         return filtered_options
+    
+    def filter_data(self, data):
+        return data

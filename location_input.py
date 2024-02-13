@@ -14,7 +14,7 @@ class LocationInput:
             checked = "checked" if string in self._selected_strings else ""
             checkboxes_html += f"""
                 <label>
-                    <input type="checkbox" name="{self.property_name}" value="{string}" {checked}> {string}
+                    <input type="checkbox" name="{self.property_name}_{string}" value="{string}" {checked}> {string}
                 </label>
             """
 
@@ -27,11 +27,27 @@ class LocationInput:
         return template
 
     def update(self):
-        selected_strings = request.form.getlist(self.property_name)  # Get list of selected values
-        self._selected_strings = selected_strings
+        """Updates the selected strings based on checkbox selections."""
 
-    def reset(self):
-        self._selected_strings = []
+        # Initialize an empty list to store selected strings
+        selected_strings = []
+
+        # Loop through each available string
+        for string in self.available_strings:
+            # Check if the checkbox associated with the string is checked
+            checkbox_name = f"{self.property_name}_{string}"
+            is_checked = request.form.get(checkbox_name) is not None
+
+            # Add the string to the list if it's checked
+            if is_checked:
+                selected_strings.append(string)
+
+        # Update the internal variable with the selected strings
+        self._selected_strings = selected_strings
 
     def get_selected_strings(self):
         return self._selected_strings
+    
+    def filter_data(self, data):
+        df = data[data[self.label].isin(self._selected_strings)]
+        return data

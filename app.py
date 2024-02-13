@@ -42,8 +42,12 @@ def filter_data():
         curr_filter.update()
     all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
 
+    df = data_loader.get_data()
+    for curr_filt in all_filters:
+        df = curr_filt.filter_data(df)
+    
     total_entries = len(data_loader.get_data())
-    relevant_entries = total_entries
+    relevant_entries = len(df)
     
     return render_template('index.html', selected_version=selected_version, interval_inputs=all_filters_html, total_data_entries=total_entries, filtered_data_count=relevant_entries)
 

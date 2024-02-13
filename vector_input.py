@@ -41,7 +41,7 @@ class VectorInput:
             sum_html += f"""
             <span>
                 <label for="{self.name}_sum_element_{i}">{i}</label>
-                <input type="checkbox" id="{self.name}_sum_element_{i}" name="{self.name}_sum_elements" value="{i}" {checked}>
+                <input type="checkbox" id="{self.name}_sum_element_{i}" name="{self.name}_sum_elements_{i}" value="{i}" {checked}>
             </span>
         """
         sum_html += "</div>"
@@ -66,7 +66,7 @@ class VectorInput:
             interval_html += f"""
             <span>
                 <label for="{self.name}_interval_element_{i}">{i}</label>
-                <input type="checkbox" id="{self.name}_interval_element_{i}" name="{self.name}_interval_elements" value="{i}" {checked}>
+                <input type="checkbox" id="{self.name}_interval_element_{i}" name="{self.name}_interval_elements_{i}" value="{i}" {checked}>
             </span>
         """
         interval_html += "</div>"
@@ -93,8 +93,13 @@ class VectorInput:
         self.sum_filter_options["in_nr_races"] = request.form.get(f"{self.name}_in_nr_races", "")
         self.sum_filter_options["in_nr_races"] = int(self.sum_filter_options["in_nr_races"]) if self.sum_filter_options["in_nr_races"] else int(self.nr_elements)
         self.sum_filter_options["in_nr_races"] = self.limit_value_one(self.sum_filter_options["in_nr_races"])
-        self.sum_filter_options["selected_elements"] = request.form.getlist(f"{self.name}_sum_elements", type=int) or []
-
+        selected_elements = []
+        for i in range(1, self.nr_elements + 1):
+            checkbox_name = f"{self.name}_sum_elements_{i}"
+            if request.form.get(checkbox_name):  # Check if the checkbox is checked
+                selected_elements.append(int(i))  # Cast to int for consistency
+        self.sum_filter_options["selected_elements"] = selected_elements
+            
         self.interval_filter_options["min_interval"] = request.form.get(f"{self.name}_min_interval", "")
         self.interval_filter_options["min_interval"] = float(self.interval_filter_options["min_interval"]) if self.interval_filter_options["min_interval"] else 0
         self.interval_filter_options["max_interval"] = request.form.get(f"{self.name}_max_interval", "")
@@ -105,15 +110,12 @@ class VectorInput:
         self.interval_filter_options["max_race"] = request.form.get(f"{self.name}_max_race", "")
         self.interval_filter_options["max_race"] = int(self.interval_filter_options["max_race"]) if self.interval_filter_options["max_race"] else int(self.nr_elements)
         self.interval_filter_options["max_race"] = self.limit_value_zero(self.interval_filter_options["max_race"])
-        self.interval_filter_options["selected_elements"] = request.form.getlist(f"{self.name}_interval_elements", type=int) or []
-
-        # Combine both filter options into a single dictionary
-        filtered_options = {
-            "sum": self.sum_filter_options,
-            "interval": self.interval_filter_options
-        }
-
-        return filtered_options
+        selected_elements = []
+        for i in range(1, self.nr_elements + 1):
+            checkbox_name = f"{self.name}_interval_elements_{i}"
+            if request.form.get(checkbox_name):  # Check if the checkbox is checked
+                selected_elements.append(int(i))  # Cast to int for consistency
+        self.interval_filter_options["selected_elements"] = selected_elements
     
     def limit_value_one(self, value):
         if value < 1:
@@ -129,5 +131,10 @@ class VectorInput:
             value = self.nr_elements
         return value
     
+    def calc_relevant_sum(self, data):
+        hej = 4
+        return 0
+    
     def filter_data(self, data):
+        self.calc_relevant_sum(data)
         return data

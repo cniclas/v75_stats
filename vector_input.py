@@ -1,5 +1,5 @@
 from flask import request
-
+import numpy as np
 class VectorInput:
     """
     Generates HTML code for filter options and tracks user selections.
@@ -131,10 +131,41 @@ class VectorInput:
             value = self.nr_elements
         return value
     
+    def get_relevant_column(self, data):
+        relevant_column = data[self.name]
+        transformed_column = relevant_column.apply(lambda x: np.array([int(i) for i in x.split()]))
+        return transformed_column
+    
+    def get_relevant_elements(self, vector, idx_vector):
+        return vector[idx_vector]
+    
     def calc_relevant_sum(self, data):
         hej = 4
         return 0
     
+    def interval_filter(self, data):
+        relevant_data = self.get_relevant_column(data)
+        relevant_idxs = [i - 1 for i in self.interval_filter_options['selected_elements']]
+
+        min_limit = self.interval_filter_options['min_interval']
+        max_limit = self.interval_filter_options['max_interval']
+        min_hit = self.interval_filter_options['min_race']
+        max_hit = self.interval_filter_options['max_race']
+        relevant_rows = []
+        for row_idx, row in enumerate(relevant_data):
+            hit_count = 0
+            rel_data = self.get_relevant_elements(row, relevant_idxs)
+
+            for col in rel_data:
+                if col >= min_limit and col <= max_limit:
+                    hit_count += 1
+                
+            if hit_count >= min_hit and hit_count <= max_hit:
+                relevant_rows.append(row_idx)
+                
+        return data.iloc[relevant_rows]
+                
+        
     def filter_data(self, data):
-        self.calc_relevant_sum(data)
-        return data
+        df = self.interval_filter(data)
+        return df

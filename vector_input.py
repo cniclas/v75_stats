@@ -1,5 +1,7 @@
 from flask import request
 import numpy as np
+from itertools import combinations
+
 class VectorInput:
     """
     Generates HTML code for filter options and tracks user selections.
@@ -139,10 +141,6 @@ class VectorInput:
     def get_relevant_elements(self, vector, idx_vector):
         return vector[idx_vector]
     
-    def calc_relevant_sum(self, data):
-        hej = 4
-        return 0
-    
     def interval_filter(self, data):
         relevant_data = self.get_relevant_column(data)
         relevant_idxs = [i - 1 for i in self.interval_filter_options['selected_elements']]
@@ -164,8 +162,38 @@ class VectorInput:
                 relevant_rows.append(row_idx)
                 
         return data.iloc[relevant_rows]
-                
+    
+    def calculate_sums(self, vector, nr_elements):
+        if len(vector) < nr_elements:
+            raise ValueError("Du har specifierat fler kombinationer än lopp.")
+
+        sums = []
+        for subset in combinations(vector, nr_elements):
+            sums.append(sum(subset))
+        return sums
+    
+    def sum_filter(self, data):
+        relevant_data = self.get_relevant_column(data)
+        relevant_idxs = [i - 1 for i in self.sum_filter_options['selected_elements']]
+
+        min_limit = self.sum_filter_options['min_sum']
+        max_limit = self.sum_filter_options['max_sum']
+        nr_races = self.sum_filter_options['in_nr_races']
+
+        relevant_rows = []
+        for row_idx, row in enumerate(relevant_data):
+            rel_data = self.get_relevant_elements(row, relevant_idxs)
+
+            sums = self.calculate_sums(rel_data, nr_races)
+            
+            for curr_sum in sums:
+                if curr_sum >= min_limit and curr_sum <= max_limit:
+                    relevant_rows.append(row_idx)
+                    break
+            
+        return data.iloc[relevant_rows]  
         
     def filter_data(self, data):
         df = self.interval_filter(data)
+        df = self.sum_filter(df)
         return df

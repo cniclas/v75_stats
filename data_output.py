@@ -16,10 +16,10 @@ def calculate_scalar_field_statistics(data, label):
 
   # Calculate the statistics
   statistics = {
-    "min": scalar_field.min(),
-    "max": scalar_field.max(),
-    "medel": scalar_field.mean(),
-    "summa": scalar_field.sum(),
+    "min": round(scalar_field.min(), 2),
+    "max": round(scalar_field.max(), 2),
+    "medel": round(scalar_field.mean(), 2),
+    "summa": round(scalar_field.sum(), 2),
   }
 
   return statistics
@@ -38,7 +38,7 @@ def generate_html_report(label, statistics):
 
   html = f"""
   <div class="statistics-row">
-    <span class="label">{label.capitalize()}:</span>
+    <span class="label">{label.capitalize()}     </span>
     """
 
   for key, value in statistics.items():

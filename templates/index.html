@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Data Loader</title>
-  </head>
-  <body>
-    <h1>Data Loader</h1>
-    <form method="POST" action="/load_data">
-      <input type="radio" id="v75" name="data_version" value="v75" {% if selected_version == "v75" %}checked{% endif %}>
-      <label for="v75">v75 Data</label><br>
-      <input type="radio" id="v86" name="data_version" value="v86" {% if selected_version == "v86" %}checked{% endif %}>
-      <label for="v86">v86 Data</label><br>
-      <button type="submit">Load Data</button>
-    </form>
-  </body>
-  <head>
-    <title>Interval Filtering</title>
-  </head>
-  <body>
-    <h1>Filter Data</h1>
-    <form method="POST" action="/filter_data">
-      {{ interval_inputs|safe }}
-      <button type="submit">Filter</button>
-    </form>
-  </body>
-  <head>
-    <title>Results</title>
-  </head>
-  <div id="results">
-    <h2>Filtered Data Results</h2>
-    <p>Relevant Data: {{ filtered_data_count }} / {{ total_data_entries }}</p>
-  </div>
-  <body>
-    <h1>Data Statistics</h1>
-  
-    {{ all_scalar_results_html|safe }}
-  
-  </body>
-  
+<head>
+  <title>Data Loader</title>
+  <link rel="stylesheet" href="static/style.css"> </head>
+<body>
+  <h1>Data Loader</h1>
+  <form method="POST" action="/load_data">
+    <input type="radio" id="v75" name="data_version" value="v75" {% if selected_version == "v75" %}checked{% endif %}>
+    <label for="v75">v75 Data</label><br>
+    <input type="radio" id="v86" name="data_version" value="v86" {% if selected_version == "v86" %}checked{% endif %}>
+    <label for="v86">v86 Data</label><br>
+    <button type="submit">Load Data</button>
+  </form>
+
+  <h1>Filter Data</h1>
+  <form method="POST" action="/filter_data">
+    {{ interval_inputs|safe }}
+    <button type="submit">Filter</button>
+  </form>
+
+  <h1>Data Statistics</h1>
+  <p>Relevant Data: {{relevant_percentage}} % av totalt {{total_data_entries}} rader</p>
+
+
+  {{ all_scalar_results_html|safe }}
+
+</body>
 </html>

@@ -49,13 +49,24 @@ def filter_data():
     
     total_entries = len(data_loader.get_data())
     relevant_entries = len(df)
+    if total_entries > 0:
+        fraction = round(relevant_entries / total_entries, 2)
+    else:
+        fraction = 1
+    relevant_percentage = 100 * fraction
     
-    scalar_html = generate_scalar_html_report(df, '7 Rätt')
-    scalar_html += generate_scalar_html_report(df, '6 Rätt')
+    if '8 Rätt' in df.columns:
+        scalar_html = generate_scalar_html_report(df, '8 Rätt')
+        scalar_html += generate_scalar_html_report(df, '7 Rätt')        
+        scalar_html += generate_scalar_html_report(df, '6 Rätt')
+    else:
+        scalar_html = generate_scalar_html_report(df, '7 Rätt')        
+        scalar_html += generate_scalar_html_report(df, '6 Rätt')
+        scalar_html += generate_scalar_html_report(df, '5 Rätt')
     
     return render_template('index.html', selected_version=selected_version, 
                            interval_inputs=all_filters_html, total_data_entries=total_entries, 
-                           filtered_data_count=relevant_entries, all_scalar_results_html=scalar_html)
+                           relevant_percentage=relevant_percentage, all_scalar_results_html=scalar_html)
 
 if __name__ == '__main__':
     app.run(debug=True)

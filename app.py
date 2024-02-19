@@ -4,6 +4,7 @@ from interval_input_jackpot import IntervalInputJackpot
 from data_loader import DataLoader
 from vector_input import VectorInput
 from init_template_support import init_filters
+from data_output import generate_scalar_html_report
 
 app = Flask(__name__)
 
@@ -49,7 +50,12 @@ def filter_data():
     total_entries = len(data_loader.get_data())
     relevant_entries = len(df)
     
-    return render_template('index.html', selected_version=selected_version, interval_inputs=all_filters_html, total_data_entries=total_entries, filtered_data_count=relevant_entries)
+    scalar_html = generate_scalar_html_report(df, '7 Rätt')
+    scalar_html += generate_scalar_html_report(df, '6 Rätt')
+    
+    return render_template('index.html', selected_version=selected_version, 
+                           interval_inputs=all_filters_html, total_data_entries=total_entries, 
+                           filtered_data_count=relevant_entries, all_scalar_results_html=scalar_html)
 
 if __name__ == '__main__':
     app.run(debug=True)

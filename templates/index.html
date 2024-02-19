@@ -30,5 +30,11 @@
     <h2>Filtered Data Results</h2>
     <p>Relevant Data: {{ filtered_data_count }} / {{ total_data_entries }}</p>
   </div>
+  <body>
+    <h1>Data Statistics</h1>
+  
+    {{ all_scalar_results_html|safe }}
+  
+  </body>
   
 </html>

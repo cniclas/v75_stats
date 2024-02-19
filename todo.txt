@@ -1,0 +1,19 @@
+- Refactor to have data file selection in GUI. Load either v75 or v86 data file
+
+- Refactor 5-6-7 rätt till c-b-a rätt. a = max rätt
+
+- GUI refactor, a-b-c interval selection med f_include_jackpot
+
+- Presentera totalsumman av alla skalära data entries
+
+- Race option selection. Hantera data från de 7/8 individuella loppen i en data entry i två kategorier
+    - Summa 
+        - Min / Max relevant interval av summan av "Field" 
+        - i Nummer av loppen (Min 1, Max 7/8)
+        - i omgång(ar): [bool bool ... bool] antingen 7 eller 8 lång vektor
+    - Ekipage
+        - Min / Max relevant interval av "Field" (steg A)
+        - Min / Max relevant interval av antal träffar i steg A (steg B)
+        - i omgång(ar): [bool bool ... bool] antingen 7 eller 8 lång vektor
+
+

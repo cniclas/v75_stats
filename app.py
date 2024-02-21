@@ -11,7 +11,7 @@ app = Flask(__name__)
 selected_version = 'v75'
 data_loader = DataLoader()  # Create a DataLoader instance
 all_filters = []
-interval_inputs = []  # Store filter instances globally
+filter_inputs = []  # Store filter instances globally
 
 @app.route('/')
 def index():
@@ -34,7 +34,7 @@ def load_data():
     all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
 
     # Process or display the loaded data as needed
-    return render_template('index.html', selected_version=selected_version, interval_inputs=all_filters_html)
+    return render_template('index.html', selected_version=selected_version, filter_inputs=all_filters_html)
 
 @app.route('/filter_data', methods=['POST'])
 def filter_data():
@@ -65,7 +65,7 @@ def filter_data():
         scalar_html += generate_scalar_html_report(df, '5 Rätt')
     
     return render_template('index.html', selected_version=selected_version, 
-                           interval_inputs=all_filters_html, total_data_entries=total_entries, 
+                           filter_inputs=all_filters_html, total_data_entries=total_entries, 
                            relevant_percentage=relevant_percentage, all_scalar_results_html=scalar_html)
 
 if __name__ == '__main__':

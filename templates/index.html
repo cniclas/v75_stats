@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="static/style.css"> </head>
 <body>
   <h1>Data Loader</h1>
-  <form method="POST" action="/load_data">
+  <form method="POST" action="/load_data" id="load-data-form">
     <input type="radio" id="v75" name="data_version" value="v75" {% if selected_version == "v75" %}checked{% endif %}>
     <label for="v75">v75 Data</label><br>
     <input type="radio" id="v86" name="data_version" value="v86" {% if selected_version == "v86" %}checked{% endif %}>
@@ -14,8 +14,8 @@
   </form>
 
   <h1>Filter Data</h1>
-  <form method="POST" action="/filter_data">
-    {{ interval_inputs|safe }}
+  <form method="POST" action="/filter_data" id="filter-data-form">
+    {{ filter_inputs|safe }}
     <button type="submit">Filter</button>
   </form>
 

@@ -19,8 +19,8 @@ class LocationInput:
             """
 
         template = f"""
-            <div class="input-pair">
-                <label>{self.label}:</label> 
+            <div class="location-selection">
+                <label>{self.label}:</label>
                 {checkboxes_html}
             </div>
         """

@@ -14,6 +14,7 @@
   </form>
 
   <h1>Filter Data</h1>
+  <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button> 
   <form method="POST" action="/filter_data" id="filter-data-form">
     {{ filter_inputs|safe }}
     <button type="submit">Filter</button>
@@ -25,5 +26,6 @@
 
   {{ all_scalar_results_html|safe }}
 
+  <script src="static/script.js"></script>
 </body>
 </html>

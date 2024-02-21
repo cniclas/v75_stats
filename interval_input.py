@@ -15,7 +15,7 @@ class IntervalInput:
         max_value_text = str(max_value)
 
         template = """
-        <div class="input-pair">
+        <div class="filter-container">
         <label for="{property_name}_min">{label} Min:</label>
         <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value}" style="margin-right: 10px;"/>
         <label for="{property_name}_max">{label} Max:</label>

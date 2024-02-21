@@ -13,7 +13,7 @@ class DateIntervalInput:
         max_date_str = self._max_date.strftime("%Y-%m-%d") if self._max_date else ""
 
         template = """
-        <div class="input-pair">
+        <div class="filter-container">
             <label for="{property_name}_min_date">{label} Min Date:</label>
             <input type="date" id="{property_name}_min_date" name="{property_name}_min_date" value="{min_date_str}"/>
             <label for="{property_name}_max_date">{label} Max Date:</label>

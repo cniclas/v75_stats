@@ -1,6 +1,6 @@
 let allCheckBoxesState = true;
 function alla_banor_click() {
-    const locationSelectionDiv = document.querySelector('.location-selection');
+    const locationSelectionDiv = document.querySelector('.banor-checkboxes');
     const checkboxes = locationSelectionDiv.querySelectorAll('input[type="checkbox"]');
 
     allCheckBoxesState = !allCheckBoxesState;

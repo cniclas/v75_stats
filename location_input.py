@@ -19,9 +19,11 @@ class LocationInput:
             """
 
         template = f"""
-            <div class="location-selection">
-                <label>{self.label}:</label>
-                {checkboxes_html}
+            <div class="filter-container">
+                <div class="banor-checkboxes">
+                    <label>{self.label}:</label>
+                    {checkboxes_html}
+                </div>
             </div>
         """
         return template

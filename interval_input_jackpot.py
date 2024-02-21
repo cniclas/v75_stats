@@ -15,7 +15,7 @@ class IntervalInputJackpot(IntervalInput):
         checkbox_checked = "checked" if self._include_jackpots else ""
 
         template = """
-        <div class="input-pair">
+        <div class="filter-container">
             <label for="{property_name}_min">{label} Min:</label>
             <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value}"/>
             <label for="{property_name}_max">{label} Max:</label>

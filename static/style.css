@@ -14,3 +14,21 @@
 .value {
   color: #333;
 }
+
+.main-filter-container {
+  border: 1px solid #e0e0e0; /* Delicate border */
+}
+
+.filter-container {
+  background-color: #f8f9fa; /* Light, subtle background */
+  border: 1px solid #e0e0e0; /* Delicate border */
+  border-radius: 5px;         /* Softly rounded corners */
+  padding: 5px;              /* Comfortable spacing */
+  margin-bottom: 1px;        /* Space between containers */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle drop shadow */
+}
+
+.filter-container label {
+  font-weight: bold;          /* Emphasize labels */
+  margin-bottom: 5px;         /* Space between label and elements */
+}

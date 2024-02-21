@@ -13,12 +13,15 @@
     <button type="submit">Load Data</button>
   </form>
 
-  <h1>Filter Data</h1>
-  <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button> 
-  <form method="POST" action="/filter_data" id="filter-data-form">
-    {{ filter_inputs|safe }}
-    <button type="submit">Filter</button>
-  </form>
+  <div class="main-filter-container">
+    <h1>Filter Data</h1>
+    <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button> 
+    <form method="POST" action="/filter_data" id="filter-data-form">
+        {{ filter_inputs|safe }}
+        <button type="submit">Filter</button>
+    </form>
+  </div>
+
 
   <h1>Data Statistics</h1>
   <p>Relevant Data: {{relevant_percentage}} % av totalt {{total_data_entries}} rader</p>

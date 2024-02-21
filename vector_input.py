@@ -25,7 +25,10 @@ class VectorInput:
         }
         
     def generate_html(self):
-        html = f"<h3>{self.name}</h3>"
+        html = f"""
+            <div class="filter-container">
+            <h3>{self.name}</h3>
+            """
 
         # Create HTML structure for "sum" filter options with multiple inputs on the same row
         sum_html = f"""
@@ -74,7 +77,7 @@ class VectorInput:
         interval_html += "</div>"
 
         # Combine sections and return complete HTML
-        html += sum_html + interval_html
+        html += sum_html + interval_html + "</div>"
         return html
 
     def update(self):

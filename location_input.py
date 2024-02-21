@@ -21,6 +21,7 @@ class LocationInput:
         template = f"""
             <div class="input-pair">
                 <label>{self.label}:</label>
+                <button id="{self.property_name}_toggle_button">Alla</button> 
                 {checkboxes_html}
             </div>
         """

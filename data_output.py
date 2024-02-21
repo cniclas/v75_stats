@@ -24,6 +24,9 @@ def calculate_scalar_field_statistics(data, label):
 
   return statistics
 
+def format_number(number):
+  return "{:,}".format(number)
+
 def generate_html_report(label, statistics):
   """
   Generates HTML code to present the statistics for a specific label.
@@ -44,7 +47,7 @@ def generate_html_report(label, statistics):
   for key, value in statistics.items():
     html += f"""
     <span class="statistic">
-      <span class="value">{key.capitalize()}: {value}</span>
+      <span class="value">{key.capitalize()}: {format_number(value)}</span>
     </span>
     """
 

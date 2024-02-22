@@ -83,6 +83,7 @@
   background-color: lightblue; /* Set the background color */
   color: #333;          /* Optional: Adjust text color for contrast */ 
   font-weight: bold;
+  font-size: 20px;
 }
 
 .filter-button-container button:hover {

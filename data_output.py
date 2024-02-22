@@ -1,65 +1,93 @@
 import pandas as pd
 import math
 
-def calculate_scalar_field_statistics(data, label):
-  """
-  Calculates the minimum, maximum, mean, and sum of a scalar field in a dataset.
-
-  Args:
-    data: A pandas DataFrame containing the data.
-    label: The name of the scalar field to analyze.
-
-  Returns:
-    A dictionary containing the calculated statistics.
-  """
+def calculate_scalar_field_statistics(all_data, filt_data, label):
   # Get the scalar field data
-  scalar_field = data[label]
+  data_scalar_field = all_data[label]
+  filt_scalar_field = filt_data[label]
 
   # Calculate the statistics
-  statistics = {
-    "min": scalar_field.min(),
-    "max": scalar_field.max(),
-    "medel": scalar_field.mean(),
-    "summa": scalar_field.sum(),
+  data_statistics = {
+    "min": data_scalar_field.min(),
+    "max": data_scalar_field.max(),
+    "medel": data_scalar_field.mean(),
+    "summa": data_scalar_field.sum(),
+  }
+  
+  filt_statistics = {
+    "min": filt_scalar_field.min(),
+    "max": filt_scalar_field.max(),
+    "medel": filt_scalar_field.mean(),
+    "summa": filt_scalar_field.sum(),
+  }
+  
+  stats = {
+    "all_data": data_statistics,
+    "filt_data": filt_statistics,
   }
 
-  return statistics
+  return stats
 
 def format_number(number):
   if math.isnan(number):
     number = 0
-  return "{:,}".format(int(number)) 
+  return "{:,}".format(int(number))
 
-def generate_html_report(label, statistics):
-  """
-  Generates HTML code to present the statistics for a specific label.
+def calc_percentage(x, xtot):
+  if xtot > 0:
+    frac = x / xtot
+  else:
+    frac = 0
+  return frac * 100
 
-  Args:
-    label: The name of the scalar field.
-    statistics: A dictionary containing the calculated statistics.
+def generate_html_report(label, stats, nr_all_data, nr_filt_data):
+    nr_percent = calc_percentage(nr_filt_data, nr_all_data)
 
-  Returns:
-    A string containing the HTML code.
-  """
-
-  html = f"""
-  <div class="statistics-row">
-    <span class="label">{label.capitalize()}     </span>
+    html = f"""
+    <div class="scalar-results"> 
+        <h2>Statistics for {label}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Omgångar</th>
+                    <th>Pott total</th>
+                    <th>Medel</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr> 
+                    <td><b>{format_number(nr_all_data)}</b></td>
+                    <td><b>{format_number(stats['all_data']['summa'])}</b></td>
+                    <td><b>{format_number(stats['all_data']['medel'])}</b></td>
+                    <td><b>{format_number(stats['all_data']['min'])}</b></td>
+                    <td><b>{format_number(stats['all_data']['max'])}</b></td>
+                </tr>
+                <tr> 
+                    <td>{nr_filt_data}</td>
+                    <td>{format_number(stats['filt_data']['summa'])}</td>
+                    <td>{format_number(stats['filt_data']['medel'])}</td>
+                    <td>{format_number(stats['filt_data']['min'])}</td>
+                    <td>{format_number(stats['filt_data']['max'])}</td>
+                </tr>
+                <tr> 
+                    <td>{calc_percentage(nr_filt_data, nr_all_data):.1f}%</td> 
+                    <td>{calc_percentage(stats['filt_data']['summa'], stats['all_data']['summa']):.1f}%</td>
+                    <td>{calc_percentage(stats['filt_data']['medel'], stats['all_data']['medel']):.1f}%</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 
     """
+    return html
 
-  for key, value in statistics.items():
-    html += f"""
-    <span class="statistic">
-      <span class="value">{key.capitalize()}: {format_number(value)}</span>
-    </span>
-    """
 
-  html += """
-  </div>
-  """
 
-  return html
 
-def generate_scalar_html_report(data, label):
-    stats = calculate_scalar_field_statistics(data, label)
-    return generate_html_report(label, stats)
+
+def generate_scalar_html_report(all_data, filt_data, label):
+    stats = calculate_scalar_field_statistics(all_data, filt_data, label)
+    return generate_html_report(label, stats, len(all_data), len(filt_data))

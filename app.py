@@ -44,7 +44,8 @@ def filter_data():
     for curr_filt in all_filters:
         df = curr_filt.filter_data(df)
     
-    total_entries = len(data_loader.get_data())
+    all_data = data_loader.get_data()
+    total_entries = len(all_data)
     relevant_entries = len(df)
     if total_entries > 0:
         fraction = round(relevant_entries / total_entries, 2)
@@ -53,13 +54,13 @@ def filter_data():
     relevant_percentage = 100 * fraction
     
     if '8 Rätt' in df.columns:
-        scalar_html = generate_scalar_html_report(df, '8 Rätt')
-        scalar_html += generate_scalar_html_report(df, '7 Rätt')        
-        scalar_html += generate_scalar_html_report(df, '6 Rätt')
+        scalar_html = generate_scalar_html_report(all_data, df, '8 Rätt')
+        scalar_html += generate_scalar_html_report(all_data, df, '7 Rätt')        
+        scalar_html += generate_scalar_html_report(all_data, df, '6 Rätt')
     else:
-        scalar_html = generate_scalar_html_report(df, '7 Rätt')        
-        scalar_html += generate_scalar_html_report(df, '6 Rätt')
-        scalar_html += generate_scalar_html_report(df, '5 Rätt')
+        scalar_html = generate_scalar_html_report(all_data, df, '7 Rätt')        
+        scalar_html += generate_scalar_html_report(all_data, df, '6 Rätt')
+        scalar_html += generate_scalar_html_report(all_data, df, '5 Rätt')
     
     return render_template('index.html', selected_version=selected_version, 
                            filter_inputs=all_filters_html, total_data_entries=total_entries, 

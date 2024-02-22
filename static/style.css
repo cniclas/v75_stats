@@ -71,3 +71,38 @@
   font-weight: bold;          /* Emphasize labels */
   margin-bottom: 5px;         /* Space between label and elements */
 }
+/* filter options styling end */
+
+/* Result presentation styling */
+.scalar-results {
+  border: 1px solid #ddd;       /* Subtle border */
+  padding: 20px;                /* Internal spacing */
+  border-radius: 5px;           /* Rounded corners */
+  margin-bottom: 20px;          /* Space below */
+  font-family: Arial, sans-serif;   /* Clean font */
+}
+
+.scalar-results h2 {
+  color: #333;                  /* Darker heading */
+  margin-bottom: 15px;        
+}
+
+.scalar-results table {
+  border-collapse: collapse;    /* Single lines for table borders */
+  width: 100%;                  /* Make table fill container width */
+}
+
+.scalar-results th, 
+.scalar-results td {
+  text-align: left;             /* Align text */
+  padding: 8px;                 /* Cell spacing */
+  border: 1px solid #eee;       /* Light cell borders */
+}
+
+.scalar-results th {
+  background-color: #f0f0f0;    /* Light gray header background */
+}
+
+.scalar-results tr:first-child td { 
+  font-weight: bold;            /* Bold for the 'All Data' row */
+}

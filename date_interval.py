@@ -2,11 +2,11 @@ from datetime import datetime
 from flask import request
 
 class DateIntervalInput:
-    def __init__(self, label_in, min_date):
+    def __init__(self, label_in, min_date, max_date):
         self.label = label_in
         self.property_name = label_in.replace(" ", "_")
         self._min_date = min_date
-        self._max_date = datetime.today()
+        self._max_date = max_date
         self._all_months = ["January", "February", "March", "April", "May", "June",
                    "July", "August", "September", "October", "November", "December"]
         self._selected_months = self._all_months

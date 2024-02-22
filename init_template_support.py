@@ -49,7 +49,8 @@ def init_filters(data):
             all_filters.append(current_filter)
         elif filter_type == 'date':
             oldest_date = data['Datum'].min()
-            current_filter = DateIntervalInput(name, oldest_date)
+            newest_date = data['Datum'].max()
+            current_filter = DateIntervalInput(name, oldest_date, newest_date)
             all_filters.append(current_filter)
         elif filter_type == 'interval':
             current_filter = IntervalInput(name)

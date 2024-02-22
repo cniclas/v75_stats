@@ -24,11 +24,15 @@
     <button id="all_months_toggle_button" onclick="all_months_click()">Avmarkera alla månader</button> 
     <form method="POST" action="/filter_data" id="filter-data-form">
         {{ filter_inputs|safe }}
-        <button type="submit">Filter</button>
+        <div class="filter-button-container"> 
+          <button type="submit">Filter</button>
+      </div>      
     </form>
   </div>
 
-  {{ all_scalar_results_html|safe }}
+  <div class="main-output-container">
+    {{ all_scalar_results_html|safe }}
+  </div>
 
   <script src="static/script.js"></script>
 </body>

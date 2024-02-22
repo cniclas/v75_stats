@@ -71,20 +71,55 @@
   font-weight: bold;          /* Emphasize labels */
   margin-bottom: 5px;         /* Space between label and elements */
 }
+
+.filter-button-container {
+  width: 100%;         /* Make container fill parent's width */
+  text-align: center;  /* Optionally center the button */
+}
+
+.filter-button-container button { 
+  width: 100%;         /* Button takes full width of container */
+  padding: 10px 15px;  /* Add padding to the button */
+  background-color: lightblue; /* Set the background color */
+  color: #333;          /* Optional: Adjust text color for contrast */ 
+  font-weight: bold;
+}
+
+.filter-button-container button:hover {
+  background-color: #87CEFA; /* Slightly darker blue on hover */
+}
+
+.filter-button-container button:active {
+  background-color: #00BFFF; /* Even darker blue when pressed */
+}
+
+
 /* filter options styling end */
 
 /* Result presentation styling */
+.main-output-container {
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;  /* Subtle border */
+  padding: 5px;           /* Add internal spacing */
+  border-radius: 5px;      /* Slightly rounded corners */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Soft drop shadow */
+  margin-bottom: 20px;     /* Space below the loader */
+  font-family: Arial, sans-serif;  /* Clean, readable font */
+}
+
 .scalar-results {
   border: 1px solid #ddd;       /* Subtle border */
   padding: 20px;                /* Internal spacing */
   border-radius: 5px;           /* Rounded corners */
-  margin-bottom: 20px;          /* Space below */
+  margin-bottom: 5px;          /* Space below */
+  margin-top: 5px;
   font-family: Arial, sans-serif;   /* Clean font */
 }
 
 .scalar-results h2 {
   color: #333;                  /* Darker heading */
-  margin-bottom: 15px;        
+  margin-bottom: 5px;
+  margin-top: 5px;       
 }
 
 .scalar-results table {

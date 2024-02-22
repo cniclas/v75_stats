@@ -34,7 +34,7 @@ def format_number(number):
   return "{:,}".format(int(number))
 
 def calc_percentage(x, xtot):
-  if xtot > 0:
+  if xtot > 0 and not math.isnan(xtot) and not math.isnan(x):
     frac = x / xtot
   else:
     frac = 0
@@ -45,7 +45,7 @@ def generate_html_report(label, stats, nr_all_data, nr_filt_data):
 
     html = f"""
     <div class="scalar-results"> 
-        <h2>Statistics for {label}</h2>
+        <h2>Statistik för {label}</h2>
         <table>
             <thead>
                 <tr>

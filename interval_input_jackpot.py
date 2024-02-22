@@ -16,11 +16,12 @@ class IntervalInputJackpot(IntervalInput):
 
         template = """
         <div class="filter-container">
-            <label for="{property_name}_min">{label} Min:</label>
+            <label>{label}</label>
+            <label for="{property_name}_min"> Min:</label>
             <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value}"/>
-            <label for="{property_name}_max">{label} Max:</label>
+            <label for="{property_name}_max"> Max:</label>
             <input type="number" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
-            <label for="{property_name}_jackpots">{label} Include Jackpots:</label>
+            <label for="{property_name}_jackpots"> Inkludera Jackpots:</label>
             <input type="checkbox" id="{property_name}_jackpots" name="{property_name}_jackpots"
                    value="{checkbox_value}" {checkbox_checked}>
         </div>

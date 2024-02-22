@@ -21,7 +21,7 @@ class LocationInput:
         template = f"""
             <div class="filter-container">
                 <div class="banor-checkboxes">
-                    <label>{self.label}:</label>
+                    <label>{self.label}</label>
                     {checkboxes_html}
                 </div>
             </div>

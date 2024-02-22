@@ -16,16 +16,16 @@ def calculate_scalar_field_statistics(data, label):
 
   # Calculate the statistics
   statistics = {
-    "min": round(scalar_field.min(), 2),
-    "max": round(scalar_field.max(), 2),
-    "medel": round(scalar_field.mean(), 2),
-    "summa": round(scalar_field.sum(), 2),
+    "min": round(scalar_field.min()),
+    "max": round(scalar_field.max()),
+    "medel": round(scalar_field.mean()),
+    "summa": round(scalar_field.sum()),
   }
 
   return statistics
 
 def format_number(number):
-  return "{:,}".format(number)
+  return "{:,}".format(int(number)) 
 
 def generate_html_report(label, statistics):
   """

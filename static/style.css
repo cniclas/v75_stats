@@ -17,6 +17,7 @@
 
 /* Data loader styling */
 .data-loader {
+  background-color: #f8f9fa;
   border: 1px solid #ccc;  /* Subtle border */
   padding: 5px;           /* Add internal spacing */
   border-radius: 5px;      /* Slightly rounded corners */
@@ -44,12 +45,21 @@
 } 
 /* end data loader styling */
 
+/* Filter options styling */
 .main-filter-container {
+  background-color: #f8f9fa;
   border: 1px solid #e0e0e0; /* Delicate border */
+  font-family: Arial, sans-serif;  /* Clean, readable font */
+}
+
+.main-filter-container h2 {
+  color: #333;            /* Darker heading color */
+  margin-bottom: 5px;    /* Space below the heading */
+  margin-top: 5px; 
 }
 
 .filter-container {
-  background-color: #f8f9fa; /* Light, subtle background */
+  background-color: #eeeff0; /* Light, subtle background */
   border: 1px solid #e0e0e0; /* Delicate border */
   border-radius: 5px;         /* Softly rounded corners */
   padding: 5px;              /* Comfortable spacing */

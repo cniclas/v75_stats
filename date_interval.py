@@ -7,8 +7,8 @@ class DateIntervalInput:
         self.property_name = label_in.replace(" ", "_")
         self._min_date = min_date
         self._max_date = datetime.today()
-        self._all_months = ["Januari", "Februari", "Mars", "April", "Maj", "Juni",
-                    "Juli", "Augusti", "September", "Oktober", "November", "December"]
+        self._all_months = ["January", "February", "March", "April", "May", "June",
+                   "July", "August", "September", "October", "November", "December"]
         self._selected_months = self._all_months
 
     def generate_html(self):
@@ -73,6 +73,14 @@ class DateIntervalInput:
         return self._min_date, self._max_date
     
     def filter_data(self, data):
-        df = data[data[self.label].between(self._min_date, self._max_date, inclusive='both')]
-        df = df[df['date_column'].dt.month_name().isin(self._selected_months)] 
+        df = data.copy()  # Create a copy to preserve the original structure
+
+        df = df[data[self.label].between(self._min_date, self._max_date, inclusive='both')]
+
+        df = df[df[self.label].dt.month_name().isin(self._selected_months)] 
+
+        if df.empty:  # Check if any filtering removed all rows
+            return data.iloc[0:0]  # Return an empty DataFrame with original columns
+
         return df
+

@@ -1,16 +1,13 @@
-from flask import Flask, render_template, request, jsonify
-from interval_input import IntervalInput
-from interval_input_jackpot import IntervalInputJackpot
+from flask import Flask, render_template, request
 from data_loader import DataLoader
-from vector_input import VectorInput
 from init_template_support import init_filters
 from data_output import generate_scalar_html_report
 
 app = Flask(__name__)
 
-selected_version = 'v75'
+selected_version = 'v75' # Initialize v75 as default data selection
 data_loader = DataLoader()  # Create a DataLoader instance
-all_filters = []
+all_filters = [] # html string for filters
 filter_inputs = []  # Store filter instances globally
 
 @app.route('/')

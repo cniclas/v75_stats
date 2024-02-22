@@ -19,7 +19,7 @@
   
 
   <div class="main-filter-container">
-    <h2>Filter Data</h2>
+    <h2>Filtrera Data</h2>
     <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button> 
     <button id="all_months_toggle_button" onclick="all_months_click()">Avmarkera alla månader</button> 
     <form method="POST" action="/filter_data" id="filter-data-form">
@@ -31,7 +31,6 @@
 
   <h1>Data Statistics</h1>
   <p>Relevant Data: {{relevant_percentage}} % av totalt {{total_data_entries}} rader</p>
-
 
   {{ all_scalar_results_html|safe }}
 

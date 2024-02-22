@@ -7,20 +7,36 @@ class DateIntervalInput:
         self.property_name = label_in.replace(" ", "_")
         self._min_date = min_date
         self._max_date = datetime.today()
+        self._all_months = ["Januari", "Februari", "Mars", "April", "Maj", "Juni",
+                    "Juli", "Augusti", "September", "Oktober", "November", "December"]
+        self._selected_months = self._all_months
 
     def generate_html(self):
         min_date_str = self._min_date.strftime("%Y-%m-%d") if self._min_date else ""
         max_date_str = self._max_date.strftime("%Y-%m-%d") if self._max_date else ""
 
-        template = """
+        month_checkboxes = ""
+        for i, month_name in enumerate(self._all_months):
+            checked = "checked" if month_name in self._selected_months else ""  # Use your member variables
+            month_checkboxes += f"""
+                <label for="{self.property_name}_month_{i + 1}">{month_name}</label>
+                <input type="checkbox" id="{self.property_name}_month_{i + 1}" name="{self.property_name}_month_{i + 1}" value="{i + 1}" {checked}>
+            """
+
+        template = f"""
         <div class="filter-container">
-            <label for="{property_name}_min_date">{label} Min Date:</label>
-            <input type="date" id="{property_name}_min_date" name="{property_name}_min_date" value="{min_date_str}"/>
-            <label for="{property_name}_max_date">{label} Max Date:</label>
-            <input type="date" id="{property_name}_max_date" name="{property_name}_max_date" value="{max_date_str}"/>
+            <label>{self.label}</label>
+            <label for="{self.property_name}_min_date"> Min:</label>
+            <input type="date" id="{self.property_name}_min_date" name="{self.property_name}_min_date" value="{min_date_str}"/>
+            <label for="{self.property_name}_max_date"> Max:</label>
+            <input type="date" id="{self.property_name}_max_date" name="{self.property_name}_max_date" value="{max_date_str}"/>
+            <div class="selected_months"> 
+                {month_checkboxes}
+            </div>
         </div>
         """
-        return template.format(label=self.label, property_name=self.property_name, min_date_str=min_date_str, max_date_str=max_date_str)
+        return template
+
 
     def update(self):
         min_date_str = request.form.get(f"{self.property_name}_min_date")
@@ -38,12 +54,25 @@ class DateIntervalInput:
         self._min_date = datetime.strptime(min_date_str, "%Y-%m-%d") if min_date_str else None
         self._max_date = datetime.strptime(max_date_str, "%Y-%m-%d") if max_date_str else None
 
-        # You may want to add validation or error handling here
-        # to ensure dates are valid
+        # Update selected months
+        selected_months = []  # Use a list to store month names 
+
+        # Loop through all months (adjust if you want to limit the range)
+        for i in range(1, 13):  
+            checkbox_name = f"{self.property_name}_month_{i}"
+            is_checked = request.form.get(checkbox_name) is not None
+
+            if is_checked:
+                month_name = self._all_months[i - 1]  # Get the month name
+                selected_months.append(month_name)
+
+        # Update the internal variable with the selected months
+        self._selected_months = selected_months 
 
     def get_values(self):
         return self._min_date, self._max_date
     
     def filter_data(self, data):
         df = data[data[self.label].between(self._min_date, self._max_date, inclusive='both')]
+        df = df[df['date_column'].dt.month_name().isin(self._selected_months)] 
         return df

@@ -15,6 +15,35 @@
   color: #333;
 }
 
+/* Data loader styling */
+.data-loader {
+  border: 1px solid #ccc;  /* Subtle border */
+  padding: 5px;           /* Add internal spacing */
+  border-radius: 5px;      /* Slightly rounded corners */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Soft drop shadow */
+  margin-bottom: 20px;     /* Space below the loader */
+  font-family: Arial, sans-serif;  /* Clean, readable font */
+}
+
+.data-loader h2 {
+  color: #333;            /* Darker heading color */
+  margin-bottom: 5px;    /* Space below the heading */
+  margin-top: 5px; 
+}
+
+.radio-group label, 
+.radio-group input[type="radio"] {
+  display: inline-block;
+  margin-right: 10px; 
+}
+
+/* You might need to adjust alignment */
+.data-loader form { 
+  display: flex;         /* Use flexbox for layout */
+  align-items: center;   /* Vertically center elements */
+} 
+/* end data loader styling */
+
 .main-filter-container {
   border: 1px solid #e0e0e0; /* Delicate border */
 }

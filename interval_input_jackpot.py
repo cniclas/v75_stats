@@ -1,5 +1,6 @@
 from flask import request
 from interval_input import IntervalInput
+from data_output import format_number
 
 class IntervalInputJackpot(IntervalInput):
     def __init__(self, label):
@@ -7,12 +8,12 @@ class IntervalInputJackpot(IntervalInput):
         self._include_jackpots = True
 
     def generate_html(self):
-        min_value_str = str(self._min_value)
+        min_value_str = str(format_number(self._min_value))
         
         if self._max_value >= self.global_max:
             max_value_str = "Max"
         else:
-            max_value_str = str(self._max_value)
+            max_value_str = str(format_number(self._max_value))
             
 
         # Dynamically assign `value` and `checked` attributes based on internal state
@@ -23,9 +24,9 @@ class IntervalInputJackpot(IntervalInput):
         <div class="filter-container">
             <label>{label}</label>
             <label for="{property_name}_min"> Min:</label>
-            <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value_text}"/>
+            <input type="text" class="large-number-input" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value_text}"/>
             <label for="{property_name}_max"> Max:</label>
-            <input type="number" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
+            <input type="text" class="large-number-input" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
             <label for="{property_name}_jackpots"> Inkludera Jackpots:</label>
             <input type="checkbox" id="{property_name}_jackpots" name="{property_name}_jackpots"
                    value="{checkbox_value}" {checkbox_checked}>

@@ -1,5 +1,6 @@
 from flask import request
 from string_to_number import convert_string_to_number
+from data_output import format_number
 
 class IntervalInput:
     def __init__(self, label_in):
@@ -10,20 +11,20 @@ class IntervalInput:
         self._max_value = self.global_max
 
     def generate_html(self):
-        min_value_str = str(self._min_value)
+        min_value_str = str(format_number(self._min_value))
         
         if self._max_value >= self.global_max:
             max_value_str = "Max"
         else:
-            max_value_str = str(self._max_value)
+            max_value_str = str(format_number(self._max_value))
 
         template = """
         <div class="filter-container">
         <label>{label}</label>
         <label for="{property_name}_min"> Min:</label>
-        <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value_text}" style="margin-right: 10px;"/>
+        <input type="text" class="large-number-input" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value_text}" style="margin-right: 10px;"/>
         <label for="{property_name}_max"> Max:</label>
-        <input type="number" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
+        <input type="text" class="large-number-input" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
         </div>
         """
         return template.format(label=self.label, property_name=self.property_name, min_value_text=min_value_str, max_value_text=max_value_str)

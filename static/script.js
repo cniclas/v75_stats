@@ -64,3 +64,33 @@ window.onload = function() {
         monthButton.textContent = "Markera alla månader";
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var inputs = document.querySelectorAll('.large-number-input');
+
+    inputs.forEach(function(input) {
+        input.addEventListener('input', function(e) {
+            // Save the cursor position
+            let cursorPosition = this.selectionStart;
+
+            // Get the current value, remove non-digit characters except for the decimal point
+            let value = this.value.replace(/[^\d.]/g, '');
+
+            // Split the value into whole and fractional parts
+            let parts = value.split('.');
+            let wholePart = parts[0];
+            let fractionalPart = parts[1];
+
+            // Format the whole part with commas
+            let formattedWholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            // Reconstruct the value with the formatted whole part and original fractional part
+            this.value = formattedWholePart + (fractionalPart ? '.' + fractionalPart : '');
+
+            // Restore the cursor position, adjusted for added/removed commas
+            let delta = this.value.length - value.length;
+            this.setSelectionRange(cursorPosition + delta, cursorPosition + delta);
+        });
+    });
+});
+

@@ -81,6 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
             let wholePart = parts[0];
             let fractionalPart = parts[1];
 
+            // Remove leading '0' if the length of the whole part is more than 1
+            if (wholePart.length > 1 && wholePart.startsWith('0')) {
+                wholePart = wholePart.substring(1);
+                // Adjust the cursor position since we removed a character
+                cursorPosition--;
+            }
+
             // Format the whole part with commas
             let formattedWholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -93,4 +100,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 

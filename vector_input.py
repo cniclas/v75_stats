@@ -12,20 +12,25 @@ class VectorInput:
         self.name = name
         self.nr_elements = nr_elements
         self.sum_filter_options = {
-            "min_sum": "",
-            "max_sum": "",
+            "min_sum": 0,
+            "max_sum": 2**64,
             "in_nr_races": self.nr_elements,
             "selected_elements": list(range(1, nr_elements + 1))  # Initially all elements selected
         }
         self.interval_filter_options = {
-            "min_interval": "",
-            "max_interval": "",
+            "min_interval": 0,
+            "max_interval": self.nr_elements,
             "min_race": 0,
             "max_race": self.nr_elements,
             "selected_elements": list(range(1, nr_elements + 1))
         }
         
     def generate_html(self):
+        
+        max_sum_str = self.sum_filter_options['max_sum']
+        if max_sum_str >= 2**64:
+            max_sum_str = "Max"
+        
         html = f"""
             <div class="filter-container">
             <h3>{self.name}</h3>
@@ -34,10 +39,10 @@ class VectorInput:
         # Create HTML structure for "sum" filter options with multiple inputs on the same row
         sum_html = f"""
         <div class="filter-row">
-            <label for="{self.name}_sum_min">Sum Filter:</label>
+            <label for="{self.name}_sum_min">Summa Intervall:</label>
             <input type="number" id="{self.name}_sum_min" name="{self.name}_min_sum" step="any" placeholder="0" value="{self.sum_filter_options['min_sum']}" style="width: 50px; height: 25px; padding: 5px;">
             -
-            <input type="number" id="{self.name}_sum_max" name="{self.name}_max_sum" step="any" placeholder="Max" value="{self.sum_filter_options['max_sum']}" style="width: 50px; height: 25px; padding: 5px;">
+            <input type="number" id="{self.name}_sum_max" name="{self.name}_max_sum" step="any" placeholder="Max" value="{max_sum_str}" style="width: 50px; height: 25px; padding: 5px;">
             i 
             <input type="number" id="{self.name}_in_nr_races" name="{self.name}_in_nr_races" value="{self.sum_filter_options['in_nr_races']}" style="width: 50px; height: 25px; padding: 5px;">
              av loppen.
@@ -95,7 +100,7 @@ class VectorInput:
         self.sum_filter_options["min_sum"] = convert_string_to_number(request.form.get(f"{self.name}_min_sum", ""), 0)
         self.sum_filter_options["max_sum"] = convert_string_to_number(request.form.get(f"{self.name}_max_sum", ""), 2**64)
 
-        self.sum_filter_options["in_nr_races"] = convert_string_to_number(request.form.get(f"{self.name}_in_nr_races", ""), 0)
+        self.sum_filter_options["in_nr_races"] = convert_string_to_number(request.form.get(f"{self.name}_in_nr_races", ""), self.nr_elements)
         self.sum_filter_options["in_nr_races"] = self.limit_value_one(self.sum_filter_options["in_nr_races"])
         
         selected_elements = []

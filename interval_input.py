@@ -1,44 +1,52 @@
 from flask import request
+from string_to_number import convert_string_to_number
 
 class IntervalInput:
     def __init__(self, label_in):
         self.label = label_in
         self.property_name = label_in.replace(" ", "_")
-        self._min_value = None
-        self._max_value = None
+        self.global_max = 2**64
+        self._min_value = 0
+        self._max_value = self.global_max
 
     def generate_html(self):
-        min_value = self._min_value or 0
-        max_value = self._max_value or "Max"
-
-        # Ensure max_value is a string for consistent rendering
-        max_value_text = str(max_value)
+        min_value_str = str(self._min_value)
+        
+        if self._max_value >= self.global_max:
+            max_value_str = "Max"
+        else:
+            max_value_str = str(self._max_value)
 
         template = """
         <div class="filter-container">
         <label>{label}</label>
         <label for="{property_name}_min"> Min:</label>
-        <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value}" style="margin-right: 10px;"/>
+        <input type="number" id="{property_name}_min" name="{property_name}_min" step="any" placeholder="0" value="{min_value_text}" style="margin-right: 10px;"/>
         <label for="{property_name}_max"> Max:</label>
         <input type="number" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
         </div>
         """
-        return template.format(label=self.label, property_name=self.property_name, min_value=min_value, max_value_text=max_value_text)
+        return template.format(label=self.label, property_name=self.property_name, min_value_text=min_value_str, max_value_text=max_value_str)
 
     def update(self):
-        min_value = request.form.get(f"{self.property_name}_min", None)
-        max_value = request.form.get(f"{self.property_name}_max", None)
+        min_value_in = request.form.get(f"{self.property_name}_min", None)
+        max_value_in = request.form.get(f"{self.property_name}_max", None)
+        
+        min_value = convert_string_to_number(min_value_in, error_value=0)
+        if min_value < 0:
+            min_value = 0
+            
+        max_value = convert_string_to_number(max_value_in, error_value=self.global_max)
+        if max_value < min_value:
+            max_value = min_value
         
         # Update internal values based on user input
-        self._min_value = float(min_value) if min_value else 0
-        self._max_value = float(max_value) if max_value else float('inf')
-
-        # You may want to add validation or error handling here
-        # to ensure min_value and max_value are valid (e.g., non-negative)
+        self._min_value = min_value
+        self._max_value = max_value
 
     def filter_data(self, data):
-        min_value = float(self._min_value)
-        max_value = float(self._max_value)
+        min_value = int(self._min_value)
+        max_value = int(self._max_value)
         df = data[data[self.label].between(min_value, max_value)]
         return df
     

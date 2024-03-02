@@ -1,6 +1,7 @@
 from flask import request
 import numpy as np
 from itertools import combinations
+from string_to_number import convert_string_to_number
 
 class VectorInput:
     """
@@ -91,13 +92,12 @@ class VectorInput:
             dict: A dictionary containing selected filter options.
         """
 
-        self.sum_filter_options["min_sum"] = request.form.get(f"{self.name}_min_sum", "")
-        self.sum_filter_options["min_sum"] = float(self.sum_filter_options["min_sum"]) if self.sum_filter_options["min_sum"] else 0
-        self.sum_filter_options["max_sum"] = request.form.get(f"{self.name}_max_sum", "")
-        self.sum_filter_options["max_sum"] = float(self.sum_filter_options["max_sum"]) if self.sum_filter_options["max_sum"] else float('inf')
-        self.sum_filter_options["in_nr_races"] = request.form.get(f"{self.name}_in_nr_races", "")
-        self.sum_filter_options["in_nr_races"] = int(self.sum_filter_options["in_nr_races"]) if self.sum_filter_options["in_nr_races"] else int(self.nr_elements)
+        self.sum_filter_options["min_sum"] = convert_string_to_number(request.form.get(f"{self.name}_min_sum", ""), 0)
+        self.sum_filter_options["max_sum"] = convert_string_to_number(request.form.get(f"{self.name}_max_sum", ""), 2**64)
+
+        self.sum_filter_options["in_nr_races"] = convert_string_to_number(request.form.get(f"{self.name}_in_nr_races", ""), 0)
         self.sum_filter_options["in_nr_races"] = self.limit_value_one(self.sum_filter_options["in_nr_races"])
+        
         selected_elements = []
         for i in range(1, self.nr_elements + 1):
             checkbox_name = f"{self.name}_sum_elements_{i}"
@@ -105,16 +105,14 @@ class VectorInput:
                 selected_elements.append(int(i))  # Cast to int for consistency
         self.sum_filter_options["selected_elements"] = selected_elements
             
-        self.interval_filter_options["min_interval"] = request.form.get(f"{self.name}_min_interval", "")
-        self.interval_filter_options["min_interval"] = float(self.interval_filter_options["min_interval"]) if self.interval_filter_options["min_interval"] else 0
-        self.interval_filter_options["max_interval"] = request.form.get(f"{self.name}_max_interval", "")
-        self.interval_filter_options["max_interval"] = float(self.interval_filter_options["max_interval"]) if self.interval_filter_options["max_interval"] else float('inf')
-        self.interval_filter_options["min_race"] = request.form.get(f"{self.name}_min_race", "")
-        self.interval_filter_options["min_race"] = int(self.interval_filter_options["min_race"]) if self.interval_filter_options["min_race"] else 0
+        self.interval_filter_options["min_interval"] = convert_string_to_number(request.form.get(f"{self.name}_min_interval", ""), 0)
+        self.interval_filter_options["max_interval"] = convert_string_to_number(request.form.get(f"{self.name}_max_interval", ""), 2**64)
+        
+        self.interval_filter_options["min_race"] = convert_string_to_number(request.form.get(f"{self.name}_min_race", ""), 0)
         self.interval_filter_options["min_race"] = self.limit_value_zero(self.interval_filter_options["min_race"])
-        self.interval_filter_options["max_race"] = request.form.get(f"{self.name}_max_race", "")
-        self.interval_filter_options["max_race"] = int(self.interval_filter_options["max_race"]) if self.interval_filter_options["max_race"] else int(self.nr_elements)
+        self.interval_filter_options["max_race"] = convert_string_to_number(request.form.get(f"{self.name}_max_race", ""), 2**64)
         self.interval_filter_options["max_race"] = self.limit_value_zero(self.interval_filter_options["max_race"])
+        
         selected_elements = []
         for i in range(1, self.nr_elements + 1):
             checkbox_name = f"{self.name}_interval_elements_{i}"

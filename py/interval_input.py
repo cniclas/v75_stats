@@ -1,6 +1,6 @@
 from flask import request
-from string_to_number import convert_string_to_number
-from data_output import format_number
+from py.string_to_number import convert_string_to_number
+from py.data_output import format_number
 
 class IntervalInput:
     def __init__(self, label_in):

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
-from data_loader import DataLoader
-from init_template_support import init_filters
-from data_output import generate_scalar_html_report
+from py.data_loader import DataLoader
+from py.init_template_support import init_filters
+from py.data_output import generate_scalar_html_report
 
 app = Flask(__name__)
 

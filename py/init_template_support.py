@@ -1,8 +1,8 @@
-from interval_input import IntervalInput
-from interval_input_jackpot import IntervalInputJackpot
-from vector_input import VectorInput
-from date_interval import DateIntervalInput
-from location_input import LocationInput
+from py.interval_input import IntervalInput
+from py.interval_input_jackpot import IntervalInputJackpot
+from py.vector_input import VectorInput
+from py.date_interval import DateIntervalInput
+from py.location_input import LocationInput
 
 def is_interval_field(fieldname):
     interval_fields = ['Omsättning', 'Antal System']

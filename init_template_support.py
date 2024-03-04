@@ -32,6 +32,16 @@ def determine_filter_type(fieldname):
         type = 'date'
     return type
 
+def gather_type_of_filters(data, label):
+    # Gathers type of filters in to groups of the same type.
+    # This enables us to specify several desired intervals. (minx1,max1) || (minx2,max2) || ... || (minxn,maxn)
+    # Ex 1: 
+    # (Omsättning > 10 && Omsättning < 20) || (Omsättning > 100 && Omsättning < 200)
+    # 
+    # 
+    pass
+    
+
 def init_filters(data):
     all_filters = []
     all_fields = data.columns.tolist()

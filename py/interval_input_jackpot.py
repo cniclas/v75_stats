@@ -45,3 +45,9 @@ class IntervalInputJackpot(IntervalInput):
         else:
             df = data[data[self.label].between(self._min_value, self._max_value)]
         return df
+    
+    def get_filter_str(self):
+        # Call the base class method to get the logical string
+        base_expression = super().get_filter_str()
+        # Append the OR condition
+        return f"((`{base_expression}`) | (data[{self.label}]==0))"

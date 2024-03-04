@@ -53,3 +53,9 @@ class LocationInput:
     def filter_data(self, data):
         df = data[data[self.label].isin(self._selected_strings)]
         return df
+
+    def get_label(self):
+        return self.label
+    
+    def get_filter_str(self):
+        return f"`{self.label}`.isin({json.dumps(self._selected_strings)})"

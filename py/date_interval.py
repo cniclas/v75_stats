@@ -84,3 +84,11 @@ class DateIntervalInput:
 
         return df
 
+    def get_label(self):
+        return self.label
+    
+    def get_filter_str(self):
+        min_date_str = self._min_date.strftime("%Y-%m-%d") if self._min_date else ""
+        max_date_str = self._max_date.strftime("%Y-%m-%d") if self._max_date else ""
+
+        return f"`{self.label}`.between({min_date_str}, {max_date_str}) & {self.label}.dt.month_name().isin({self._selected_months})"

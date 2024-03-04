@@ -51,5 +51,14 @@ class IntervalInput:
         df = data[data[self.label].between(min_value, max_value)]
         return df
     
+    def get_filter_str(self):
+        min_value = int(self._min_value)
+        max_value = int(self._max_value)
+        # Instead of filtering the dataframe, return the logical expression as a string
+        return f"((`{self.label}` >= {min_value}) and (`{self.label}` <= {max_value}))"
+    
     def get_values(self):
         return self._min_value, self._max_value
+    
+    def get_label(self):
+        return self.label

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from py.data_loader import DataLoader
 from py.init_template_support import init_filters
 from py.data_output import generate_scalar_html_report
+from py.filter_iterator import filter_iterator
 
 app = Flask(__name__)
 
@@ -40,11 +41,9 @@ def filter_data():
         curr_filter.update()
     all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
 
-    df = data_loader.get_data()
-    for curr_filt in all_filters:
-        df = curr_filt.filter_data(df)
-    
     all_data = data_loader.get_data()
+    df = filter_iterator(all_data, all_filters)
+    
     total_entries = len(all_data)
     relevant_entries = len(df)
     if total_entries > 0:

@@ -3,7 +3,12 @@ from py.string_to_number import convert_string_to_number
 from py.data_output import format_number
 
 class IntervalInput:
+    # Class variable to keep track of the count
+    instance_count = 0
+    
     def __init__(self, label_in):
+        self.instance_count += 1
+        self.unique_id = self.instance_count
         self.label = label_in
         self.property_name = label_in.replace(" ", "_")
         self.global_max = 2**64
@@ -27,11 +32,11 @@ class IntervalInput:
         <input type="text" class="large-number-input" id="{property_name}_max" name="{property_name}_max" step="any" placeholder="Max" value="{max_value_text}"/>
         </div>
         """
-        return template.format(label=self.label, property_name=self.property_name, min_value_text=min_value_str, max_value_text=max_value_str)
+        return template.format(label=self.label, property_name= self.property_name + str(self.unique_id), min_value_text=min_value_str, max_value_text=max_value_str)
 
     def update(self):
-        min_value_in = request.form.get(f"{self.property_name}_min", None)
-        max_value_in = request.form.get(f"{self.property_name}_max", None)
+        min_value_in = request.form.get(f"{self.property_name}{self.instance_count}_min", None)
+        max_value_in = request.form.get(f"{self.property_name}{self.instance_count}_max", None)
         
         min_value = convert_string_to_number(min_value_in, error_value=0)
         if min_value < 0:

@@ -32,12 +32,12 @@ class IntervalInputJackpot(IntervalInput):
                    value="{checkbox_value}" {checkbox_checked}>
         </div>
         """
-        return template.format(label=self.label, property_name=self.property_name, min_value_text=min_value_str,
+        return template.format(label=self.label, property_name=self.property_name + str(self.instance_count), min_value_text=min_value_str,
                               max_value_text=max_value_str, checkbox_value=checkbox_value, checkbox_checked=checkbox_checked)
     
     def update(self):
         super().update()
-        self._include_jackpots = request.form.get(f"{self.property_name}_jackpots", None)
+        self._include_jackpots = request.form.get(f"{self.property_name}{self.instance_count}_jackpots", None)
 
     def filter_data(self, data):
         if self._include_jackpots:

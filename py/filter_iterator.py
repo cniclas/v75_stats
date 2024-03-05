@@ -19,25 +19,60 @@ def get_logic_gating_string(all_filters, label):
         return query_string[0]
     else:
         return ''
+    
+def is_min_max_type(label):
+    if '8 Rätt' == label:
+        return True
+    elif '7 Rätt' == label:
+        return True
+    elif '6 Rätt' == label:
+        return True
+    elif '5 Rätt' == label:
+        return True
+    elif 'Omsättning' == label:
+        return True
+    elif 'Antal System' == label:
+        return True
+    else:
+        return False
+        
 
 def filter_iterator(data, all_filters):
     df = data
-    all_filters_str = []
+    min_max_filter = []
+    iloc_filters = []
     for curr_filter in all_filters:
         if curr_filter.get_label() == 'Bana':
             df = curr_filter.filter_data(df)
         elif curr_filter.get_label() == 'Datum':
             df = curr_filter.filter_data(df)
         else:
-            all_filters_str.append(curr_filter.get_label())
+            if is_min_max_type(curr_filter.get_label()):
+                min_max_filter.append(curr_filter.get_label())
+            else:
+                iloc_filters.append(curr_filter)
     
-    
-    all_filter_labels_uniq = set(all_filters_str)
+    # First handle the min max kind of filters
+    all_filter_labels_uniq = set(min_max_filter)
     for curr_label in all_filter_labels_uniq:
         query_string = get_logic_gating_string(all_filters, curr_label)
         
         if query_string:
             df = df.query(query_string)
+    
+    # Now handle the vector data type filters of the same type
+    total_iloc_idx = set()
+    for curr_filter in iloc_filters:
+        sum_iloc = curr_filter.sum_filter_iloc(df)
+        interval_iloc = curr_filter.interval_filter_iloc(df)
+        
+        curr_iloc_idx = set(sum_iloc) & set(interval_iloc)
+        
+        # Or gate to the total 
+        total_iloc_idx.union(curr_iloc_idx)
+        
+        # Apply the filter
+        df = df.iloc[list(total_iloc_idx)]
         
     return df
     

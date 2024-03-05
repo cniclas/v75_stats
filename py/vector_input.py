@@ -148,6 +148,54 @@ class VectorInput:
         return vector[idx_vector]
     
     def interval_filter(self, data):
+        relevant_rows = self.interval_filter_iloc(data)
+        return data.iloc[relevant_rows]
+    
+    def calculate_sums(self, vector, nr_elements):
+        if len(vector) < nr_elements:
+            raise ValueError("Du har specifierat fler kombinationer än lopp.")
+
+        sums = []
+        for subset in combinations(vector, nr_elements):
+            sums.append(sum(subset))
+        return sums
+    
+    def sum_filter(self, data):
+        relevant_rows = self.sum_filter_iloc(self, data)
+        return data.iloc[relevant_rows]  
+        
+    def filter_data(self, data):
+        df = self.interval_filter(data)
+        df = self.sum_filter(df)
+        return df
+
+    def get_label(self):
+        return self.label
+    
+    def get_filter_str(self):
+        pass
+    
+    def sum_filter_iloc(self, data):
+        relevant_data = self.get_relevant_column(data)
+        relevant_idxs = [i - 1 for i in self.sum_filter_options['selected_elements']]
+
+        min_limit = self.sum_filter_options['min_sum']
+        max_limit = self.sum_filter_options['max_sum']
+        nr_races = self.sum_filter_options['in_nr_races']
+
+        relevant_rows = []
+        for row_idx, row in enumerate(relevant_data):
+            rel_data = self.get_relevant_elements(row, relevant_idxs)
+
+            sums = self.calculate_sums(rel_data, nr_races)
+            
+            for curr_sum in sums:
+                if curr_sum >= min_limit and curr_sum <= max_limit:
+                    relevant_rows.append(row_idx)
+                    break
+        return relevant_rows
+    
+    def interval_filter_iloc(self, data):
         relevant_data = self.get_relevant_column(data)
         relevant_idxs = [i - 1 for i in self.interval_filter_options['selected_elements']]
 
@@ -166,47 +214,6 @@ class VectorInput:
                 
             if hit_count >= min_hit and hit_count <= max_hit:
                 relevant_rows.append(row_idx)
-                
-        return data.iloc[relevant_rows]
-    
-    def calculate_sums(self, vector, nr_elements):
-        if len(vector) < nr_elements:
-            raise ValueError("Du har specifierat fler kombinationer än lopp.")
-
-        sums = []
-        for subset in combinations(vector, nr_elements):
-            sums.append(sum(subset))
-        return sums
-    
-    def sum_filter(self, data):
-        relevant_data = self.get_relevant_column(data)
-        relevant_idxs = [i - 1 for i in self.sum_filter_options['selected_elements']]
-
-        min_limit = self.sum_filter_options['min_sum']
-        max_limit = self.sum_filter_options['max_sum']
-        nr_races = self.sum_filter_options['in_nr_races']
-
-        relevant_rows = []
-        for row_idx, row in enumerate(relevant_data):
-            rel_data = self.get_relevant_elements(row, relevant_idxs)
-
-            sums = self.calculate_sums(rel_data, nr_races)
-            
-            for curr_sum in sums:
-                if curr_sum >= min_limit and curr_sum <= max_limit:
-                    relevant_rows.append(row_idx)
-                    break
-            
-        return data.iloc[relevant_rows]  
         
-    def filter_data(self, data):
-        df = self.interval_filter(data)
-        df = self.sum_filter(df)
-        return df
-
-    def get_label(self):
-        return self.label
-    
-    def get_filter_str(self):
-        pass
+        return relevant_rows
     

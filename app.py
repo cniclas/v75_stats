@@ -44,6 +44,7 @@ def filter_data():
     all_data = data_loader.get_data()
     df = filter_iterator(all_data, all_filters)
     
+    # Calculate fraction of all avaialble data that is relevant
     total_entries = len(all_data)
     relevant_entries = len(df)
     if total_entries > 0:

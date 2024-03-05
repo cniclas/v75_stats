@@ -8,7 +8,11 @@ class VectorInput:
     Generates HTML code for filter options and tracks user selections.
     """
 
+    instance_count = 0
+    
     def __init__(self, label_in, nr_elements):
+        VectorInput.instance_count += 1
+        self.unique_id = VectorInput.instance_count
         self.label = label_in
         self.nr_elements = nr_elements
         self.sum_filter_options = {
@@ -33,26 +37,26 @@ class VectorInput:
         
         html = f"""
             <div class="filter-container">
-            <h3>{self.label}</h3>
+            <h3>{self.label} Id: {self.unique_id}</h3>
             """
 
         # Create HTML structure for "sum" filter options with multiple inputs on the same row
         sum_html = f"""
         <div class="filter-row">
-            <label for="{self.label}_sum_min">Summa Intervall:</label>
-            <input type="number" id="{self.label}_sum_min" name="{self.label}_min_sum" step="any" placeholder="0" value="{self.sum_filter_options['min_sum']}" style="width: 50px; height: 25px; padding: 5px;">
+            <label for="{self.label}{self.unique_id}_sum_min">Summa Intervall:</label>
+            <input type="number" id="{self.label}{self.unique_id}_sum_min" name="{self.label}{self.unique_id}_min_sum" step="any" placeholder="0" value="{self.sum_filter_options['min_sum']}" style="width: 50px; height: 25px; padding: 5px;">
             -
-            <input type="number" id="{self.label}_sum_max" name="{self.label}_max_sum" step="any" placeholder="Max" value="{max_sum_str}" style="width: 50px; height: 25px; padding: 5px;">
+            <input type="number" id="{self.label}{self.unique_id}_sum_max" name="{self.label}{self.unique_id}_max_sum" step="any" placeholder="Max" value="{max_sum_str}" style="width: 50px; height: 25px; padding: 5px;">
             i 
-            <input type="number" id="{self.label}_in_nr_races" name="{self.label}_in_nr_races" value="{self.sum_filter_options['in_nr_races']}" style="width: 50px; height: 25px; padding: 5px;">
+            <input type="number" id="{self.label}{self.unique_id}_in_nr_races" name="{self.label}{self.unique_id}_in_nr_races" value="{self.sum_filter_options['in_nr_races']}" style="width: 50px; height: 25px; padding: 5px;">
              av loppen.
         """
         for i in range(1, self.nr_elements + 1):
             checked = "checked" if i in self.sum_filter_options["selected_elements"] else ""
             sum_html += f"""
             <span>
-                <label for="{self.label}_sum_element_{i}">{i}</label>
-                <input type="checkbox" id="{self.label}_sum_element_{i}" name="{self.label}_sum_elements_{i}" value="{i}" {checked}>
+                <label for="{self.label}{self.unique_id}_sum_element_{i}">{i}</label>
+                <input type="checkbox" id="{self.label}{self.unique_id}_sum_element_{i}" name="{self.label}{self.unique_id}_sum_elements_{i}" value="{i}" {checked}>
             </span>
         """
         sum_html += "</div>"
@@ -60,24 +64,24 @@ class VectorInput:
         # Create HTML structure for "interval" filter options
         interval_html = f"""
         <div class="filter-row">
-            <label for="{self.label}_interval_min">Interval Filter:</label>
-            <input type="number" id="{self.label}_interval_min" name="{self.label}_min_interval" step="any" placeholder="0" value="{self.interval_filter_options['min_interval']}" style="width: 50px; height: 25px; padding: 5px;">
+            <label for="{self.label}{self.unique_id}_interval_min">Interval Filter:</label>
+            <input type="number" id="{self.label}{self.unique_id}_interval_min" name="{self.label}{self.unique_id}_min_interval" step="any" placeholder="0" value="{self.interval_filter_options['min_interval']}" style="width: 50px; height: 25px; padding: 5px;">
             -
-            <input type="number" id="{self.label}_interval_max" name="{self.label}_max_interval" step="any" placeholder="Max" value="{self.interval_filter_options['max_interval']}" style="width: 50px; height: 25px; padding: 5px;">
+            <input type="number" id="{self.label}{self.unique_id}_interval_max" name="{self.label}{self.unique_id}_max_interval" step="any" placeholder="Max" value="{self.interval_filter_options['max_interval']}" style="width: 50px; height: 25px; padding: 5px;">
             <span>
-                <label for="{self.label}_interval_min_race">Min Race:</label>
-                <input type="number" id="{self.label}_interval_min_race" name="{self.label}_min_race" value="{self.interval_filter_options['min_race']}" style="width: 50px; height: 25px; padding: 5px;">
+                <label for="{self.label}{self.unique_id}_interval_min_race">Min Race:</label>
+                <input type="number" id="{self.label}{self.unique_id}_interval_min_race" name="{self.label}{self.unique_id}_min_race" value="{self.interval_filter_options['min_race']}" style="width: 50px; height: 25px; padding: 5px;">
                 -
-                <label for="{self.label}_interval_max_race">Max Race:</label>
-                <input type="number" id="{self.label}_interval_max_race" name="{self.label}_max_race" value="{self.interval_filter_options['max_race']}" style="width: 50px; height: 25px; padding: 5px;">
+                <label for="{self.label}{self.unique_id}_interval_max_race">Max Race:</label>
+                <input type="number" id="{self.label}{self.unique_id}_interval_max_race" name="{self.label}{self.unique_id}_max_race" value="{self.interval_filter_options['max_race']}" style="width: 50px; height: 25px; padding: 5px;">
             </span>
         """
         for i in range(1, self.nr_elements + 1):
             checked = "checked" if i in self.interval_filter_options["selected_elements"] else ""
             interval_html += f"""
             <span>
-                <label for="{self.label}_interval_element_{i}">{i}</label>
-                <input type="checkbox" id="{self.label}_interval_element_{i}" name="{self.label}_interval_elements_{i}" value="{i}" {checked}>
+                <label for="{self.label}{self.unique_id}_interval_element_{i}">{i}</label>
+                <input type="checkbox" id="{self.label}{self.unique_id}_interval_element_{i}" name="{self.label}{self.unique_id}_interval_elements_{i}" value="{i}" {checked}>
             </span>
         """
         interval_html += "</div>"
@@ -97,30 +101,30 @@ class VectorInput:
             dict: A dictionary containing selected filter options.
         """
 
-        self.sum_filter_options["min_sum"] = convert_string_to_number(request.form.get(f"{self.label}_min_sum", ""), 0)
-        self.sum_filter_options["max_sum"] = convert_string_to_number(request.form.get(f"{self.label}_max_sum", ""), 2**64)
+        self.sum_filter_options["min_sum"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_min_sum", ""), 0)
+        self.sum_filter_options["max_sum"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_max_sum", ""), 2**64)
 
-        self.sum_filter_options["in_nr_races"] = convert_string_to_number(request.form.get(f"{self.label}_in_nr_races", ""), self.nr_elements)
+        self.sum_filter_options["in_nr_races"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_in_nr_races", ""), self.nr_elements)
         self.sum_filter_options["in_nr_races"] = self.limit_value_one(self.sum_filter_options["in_nr_races"])
         
         selected_elements = []
         for i in range(1, self.nr_elements + 1):
-            checkbox_name = f"{self.label}_sum_elements_{i}"
+            checkbox_name = f"{self.label}{self.unique_id}_sum_elements_{i}"
             if request.form.get(checkbox_name):  # Check if the checkbox is checked
                 selected_elements.append(int(i))  # Cast to int for consistency
         self.sum_filter_options["selected_elements"] = selected_elements
             
-        self.interval_filter_options["min_interval"] = convert_string_to_number(request.form.get(f"{self.label}_min_interval", ""), 0)
-        self.interval_filter_options["max_interval"] = convert_string_to_number(request.form.get(f"{self.label}_max_interval", ""), 2**64)
+        self.interval_filter_options["min_interval"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_min_interval", ""), 0)
+        self.interval_filter_options["max_interval"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_max_interval", ""), 2**64)
         
-        self.interval_filter_options["min_race"] = convert_string_to_number(request.form.get(f"{self.label}_min_race", ""), 0)
+        self.interval_filter_options["min_race"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_min_race", ""), 0)
         self.interval_filter_options["min_race"] = self.limit_value_zero(self.interval_filter_options["min_race"])
-        self.interval_filter_options["max_race"] = convert_string_to_number(request.form.get(f"{self.label}_max_race", ""), 2**64)
+        self.interval_filter_options["max_race"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_max_race", ""), 2**64)
         self.interval_filter_options["max_race"] = self.limit_value_zero(self.interval_filter_options["max_race"])
         
         selected_elements = []
         for i in range(1, self.nr_elements + 1):
-            checkbox_name = f"{self.label}_interval_elements_{i}"
+            checkbox_name = f"{self.label}{self.unique_id}_interval_elements_{i}"
             if request.form.get(checkbox_name):  # Check if the checkbox is checked
                 selected_elements.append(int(i))  # Cast to int for consistency
         self.interval_filter_options["selected_elements"] = selected_elements

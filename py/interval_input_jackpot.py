@@ -47,7 +47,14 @@ class IntervalInputJackpot(IntervalInput):
         return df
     
     def get_filter_str(self):
+        
         # Call the base class method to get the logical string
         base_expression = super().get_filter_str()
-        # Append the OR condition
-        return f"((`{base_expression}`) | (data[{self.label}]==0))"
+        
+        if self._include_jackpots:
+            # Append the OR condition
+            return f"{base_expression} or `{self.label}` == 0"
+        else:
+            # Call the base class method to get the logical string
+            return base_expression
+        

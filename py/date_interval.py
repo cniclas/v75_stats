@@ -88,6 +88,7 @@ class DateIntervalInput:
         return self.label
     
     def get_filter_str(self):
+        pass
         min_date_str = self._min_date.strftime("%Y-%m-%d") if self._min_date else ""
         max_date_str = self._max_date.strftime("%Y-%m-%d") if self._max_date else ""
 

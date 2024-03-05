@@ -208,4 +208,5 @@ class VectorInput:
         return self.label
     
     def get_filter_str(self):
-        return
+        pass
+    

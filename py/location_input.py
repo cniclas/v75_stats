@@ -58,4 +58,4 @@ class LocationInput:
         return self.label
     
     def get_filter_str(self):
-        return f"`{self.label}`.isin({json.dumps(self._selected_strings)})"
+        pass

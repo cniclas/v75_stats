@@ -13,18 +13,25 @@ def get_logic_gating_string(all_filters, label):
         
     # Use the pandas query method to filter the data according to the query string
     # The query string is joined with the OR operator
-    query = ' | '.join(query_string)
-    
-    # Return the filtered data
-    return query
+    if query_string.__len__() > 1:
+        return ' | '.join(query_string)
+    elif query_string.__len__() == 1:
+        return query_string[0]
+    else:
+        return ''
 
 def filter_iterator(data, all_filters):
-    
+    df = data
     all_filters_str = []
     for curr_filter in all_filters:
-        all_filters_str.append(curr_filter.get_label())
+        if curr_filter.get_label() == 'Bana':
+            df = curr_filter.filter_data(df)
+        elif curr_filter.get_label() == 'Datum':
+            df = curr_filter.filter_data(df)
+        else:
+            all_filters_str.append(curr_filter.get_label())
     
-    df = data
+    
     all_filter_labels_uniq = set(all_filters_str)
     for curr_label in all_filter_labels_uniq:
         query_string = get_logic_gating_string(all_filters, curr_label)

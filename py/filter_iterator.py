@@ -60,19 +60,28 @@ def filter_iterator(data, all_filters):
         if query_string:
             df = df.query(query_string)
     
-    # Now handle the vector data type filters of the same type
-    total_iloc_idx = set()
-    for curr_filter in iloc_filters:
-        sum_iloc = curr_filter.sum_filter_iloc(df)
-        interval_iloc = curr_filter.interval_filter_iloc(df)
+
+    iloc_filter_labels_uniq = set([curr_filt.get_label() for curr_filt in iloc_filters])
+    for curr_label in iloc_filter_labels_uniq:
+        relevant_filters = []
+        for curr_filt in iloc_filters:
+            if curr_filt.get_label() == curr_label:
+                relevant_filters.append(curr_filt)
         
-        curr_iloc_idx = set(sum_iloc) & set(interval_iloc)
-        
-        # Or gate to the total 
-        total_iloc_idx.union(curr_iloc_idx)
-        
-        # Apply the filter
-        df = df.iloc[list(total_iloc_idx)]
+        for curr_filter in relevant_filters:               
+            # Now handle the vector data type filters of the same type
+            total_iloc_idx = set(list(range(len(df))))
+            for curr_filter in iloc_filters:
+                sum_iloc = curr_filter.sum_filter_iloc(df)
+                interval_iloc = curr_filter.interval_filter_iloc(df)
+                
+                curr_iloc_idx = set(sum_iloc) & set(interval_iloc)
+                
+                # Or gate to the total 
+                total_iloc_idx = total_iloc_idx & curr_iloc_idx
+                
+            # Apply the filter
+            df = df.iloc[list(total_iloc_idx)]
         
     return df
     

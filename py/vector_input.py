@@ -37,7 +37,7 @@ class VectorInput:
         
         html = f"""
             <div class="filter-container">
-            <h3>{self.label} Id: {self.unique_id}</h3>
+            <h3>{self.label}, Global Id: {self.unique_id}</h3>
             """
 
         # Create HTML structure for "sum" filter options with multiple inputs on the same row

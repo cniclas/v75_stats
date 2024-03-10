@@ -1,8 +1,8 @@
-from py.interval_input import IntervalInput
-from py.interval_input_jackpot import IntervalInputJackpot
-from py.vector_input import VectorInput
-from py.date_interval import DateIntervalInput
-from py.location_input import LocationInput
+from interval_input import IntervalInput
+from interval_input_jackpot import IntervalInputJackpot
+from vector_input import VectorInput
+from date_interval import DateIntervalInput
+from location_input import LocationInput
 
 def is_interval_field(fieldname):
     interval_fields = ['Omsättning', 'Antal System']
@@ -13,7 +13,7 @@ def is_interval_jackpot(fieldname):
     return fieldname in interval_fields
 
 def is_vector_field(fieldname):
-    vector_fields = ['Startnummer', 'Ranknummer', 'Instatsprocent', 'Vinnarodds']
+    vector_fields = ['Startnummer', 'Ranknummer', 'Insatsprocent', 'Vinnarodds']
     return fieldname in vector_fields
 
 def is_bana_field(fieldname):
@@ -49,7 +49,10 @@ def init_filters(data):
         nr_max = 8
     else:
         nr_max = 7
-        
+    
+    all_filters = []
+    basic_filters = []
+    adv_filters = []
     for name in all_fields:
         filter_type = determine_filter_type(name)
         
@@ -57,19 +60,65 @@ def init_filters(data):
             available_locs = data['Bana'].unique()
             current_filter = LocationInput(name, available_locs)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
         elif filter_type == 'date':
             oldest_date = data['Datum'].min()
             newest_date = data['Datum'].max()
             current_filter = DateIntervalInput(name, oldest_date, newest_date)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
         elif filter_type == 'interval':
             current_filter = IntervalInput(name)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
         elif filter_type == 'jackpot':
             current_filter = IntervalInputJackpot(name)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
+            
         elif filter_type == 'vector':
             current_filter = VectorInput(name, nr_max)
             all_filters.append(current_filter)
+            adv_filters.append(current_filter)
         
     return all_filters
+
+def init_filters_2(data):
+    
+    if '8 Rätt' in data.columns.tolist():
+        basic_filters_names = ['Bana', 'Datum', '8 Rätt', '7 Rätt', '6 Rätt', 'Omsättning', 'Antal System']
+    else:
+        basic_filters_names = ['Bana', 'Datum', '7 Rätt', '6 Rätt', '5 Rätt', 'Omsättning', 'Antal System']
+    
+    basic_filters = []
+    for name in basic_filters_names:
+        filter_type = determine_filter_type(name)
+        
+        if filter_type == 'bana':
+            available_locs = data['Bana'].unique()
+            current_filter = LocationInput(name, available_locs)
+            basic_filters.append(current_filter)
+        elif filter_type == 'date':
+            oldest_date = data['Datum'].min()
+            newest_date = data['Datum'].max()
+            current_filter = DateIntervalInput(name, oldest_date, newest_date)
+            basic_filters.append(current_filter)
+        elif filter_type == 'interval':
+            current_filter = IntervalInput(name)
+            basic_filters.append(current_filter)
+        elif filter_type == 'jackpot':
+            current_filter = IntervalInputJackpot(name)
+            basic_filters.append(current_filter)
+    
+    if '8 Rätt' in data.columns.tolist():
+        nr_max = 8
+    else:
+        nr_max = 7
+    
+    adv_filters_names = ['Startnummer', 'Ranknummer', 'Insatsprocent', 'Vinnarodds']
+    adv_filters = []
+    for name in adv_filters_names:
+        current_filter = VectorInput(name, nr_max)
+        adv_filters.append(current_filter)
+        
+    return basic_filters, adv_filters

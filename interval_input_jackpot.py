@@ -1,6 +1,6 @@
 from flask import request
-from py.interval_input import IntervalInput
-from py.data_output import format_number
+from interval_input import IntervalInput
+from data_output import format_number
 
 class IntervalInputJackpot(IntervalInput):
     def __init__(self, label):

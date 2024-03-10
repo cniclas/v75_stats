@@ -49,7 +49,10 @@ def init_filters(data):
         nr_max = 8
     else:
         nr_max = 7
-        
+    
+    all_filters = []
+    basic_filters = []
+    adv_filters = []
     for name in all_fields:
         filter_type = determine_filter_type(name)
         
@@ -57,19 +60,59 @@ def init_filters(data):
             available_locs = data['Bana'].unique()
             current_filter = LocationInput(name, available_locs)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
         elif filter_type == 'date':
             oldest_date = data['Datum'].min()
             newest_date = data['Datum'].max()
             current_filter = DateIntervalInput(name, oldest_date, newest_date)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
         elif filter_type == 'interval':
             current_filter = IntervalInput(name)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
         elif filter_type == 'jackpot':
             current_filter = IntervalInputJackpot(name)
             all_filters.append(current_filter)
+            basic_filters.append(current_filter)
+            
         elif filter_type == 'vector':
             current_filter = VectorInput(name, nr_max)
             all_filters.append(current_filter)
+            adv_filters.append(current_filter)
         
     return all_filters
+
+def init_filters_2(data):
+    
+    basic_filters_names = ['Bana', 'Datum', '8 Rätt', '7 Rätt', '6 Rätt', '5 Rätt', 'Omsättning', 'Antal System']
+    for name in basic_filters_names:
+        filter_type = determine_filter_type(name)
+        
+        if filter_type == 'bana':
+            available_locs = data['Bana'].unique()
+            current_filter = LocationInput(name, available_locs)
+            basic_filters_names.append(current_filter)
+        elif filter_type == 'date':
+            oldest_date = data['Datum'].min()
+            newest_date = data['Datum'].max()
+            current_filter = DateIntervalInput(name, oldest_date, newest_date)
+            basic_filters_names.append(current_filter)
+        elif filter_type == 'interval':
+            current_filter = IntervalInput(name)
+            basic_filters_names.append(current_filter)
+        elif filter_type == 'jackpot':
+            current_filter = IntervalInputJackpot(name)
+            basic_filters_names.append(current_filter)
+    
+    if '8 Rätt' in data.columns.tolist():
+        nr_max = 8
+    else:
+        nr_max = 7
+    
+    adv_filters_names = ['Startnummer', 'Ranknummer', 'Instatsprocent', 'Vinnarodds']
+    for name in adv_filters_names:
+        current_filter = VectorInput(name, nr_max)
+        adv_filters_names.append(current_filter)
+        
+    return basic_filters_names, adv_filters_names

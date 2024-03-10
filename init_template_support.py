@@ -85,7 +85,11 @@ def init_filters(data):
 
 def init_filters_2(data):
     
-    basic_filters_names = ['Bana', 'Datum', '8 Rätt', '7 Rätt', '6 Rätt', '5 Rätt', 'Omsättning', 'Antal System']
+    if '8 Rätt' in data.columns.tolist():
+        basic_filters_names = ['Bana', 'Datum', '8 Rätt', '7 Rätt', '6 Rätt', 'Omsättning', 'Antal System']
+    else:
+        basic_filters_names = ['Bana', 'Datum', '7 Rätt', '6 Rätt', '5 Rätt', 'Omsättning', 'Antal System']
+    
     basic_filters = []
     for name in basic_filters_names:
         filter_type = determine_filter_type(name)

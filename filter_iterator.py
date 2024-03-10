@@ -84,5 +84,16 @@ def filter_iterator(data, all_filters):
             df = df.iloc[list(total_iloc_idx)]
         
     return df
+
+def filter_iterator_2(data, basic_filters, adv_filters):
+    
+    df_basic = data
+    for curr_filter in basic_filters:
+        df_basic = curr_filter.filter_data(df_basic)
+        
+    df_adv = df_basic
+    
+    return df_basic, df_adv
+    
     
     

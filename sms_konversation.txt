@@ -1,0 +1,14 @@
+
+Råkade bli data från Romme istället för Kalmar 😄: 
+
+Startnummer summa:   28-58 i 7 lopp = Rätt (40) 
+Ranknummer summa:   0-4 i 3 lopp av 7 = Rätt (3) 
+Insatsprocent summa:  0-9 i 2 av loppen 2,3,4 = Fel (24) 
+Vinnarodds summa:   0-10 i 5 av loppen 2,3,4,5,6,7 = Fel (14) Allaloppskombinationer Startnummer:   14-   i alla 4loppskombinationer av 7 lopp = Rätt (14) Allaloppskombinationer Ranknummer:    -13 i alla 2loppskombinationer av 7 lopp = Fel (20) Allaloppskombinationer Insatsprocent:   10- i alla 2loppskombinationer av loppen 4,5,6,7 = Rätt (55) 
+
+Allaloppskombinationer: 
+Vinnarodds:   -150 i alla 3loppskombinationer av loppen 1,3,4,5,6,7 = Rätt (20) 
+
+Hoppas jag beskrivit hyfsat begripligt. Ses söndag!
+
+

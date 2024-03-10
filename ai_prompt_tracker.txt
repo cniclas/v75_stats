@@ -1,35 +1,33 @@
 
-Sammanfattning av Resultat
 Startnummer Summa
-
 Intervall: 28-58 i 7 lopp
 Resultat: Rätt (40)
-Ranknummer Summa
 
+Ranknummer Summa
 Intervall: 0-4 i 3 av 7 lopp
 Resultat: Rätt (3)
-Insatsprocent Summa
 
+Insatsprocent Summa
 Intervall: 0-9 i 2 av loppen 2,3,4
 Resultat: Fel (24)
-Vinnarodds Summa
 
+Vinnarodds Summa
 Intervall: 0-10 i 5 av loppen 2,3,4,5,6,7
 Resultat: Fel (14)
 Kombinationer i Alla Lopp
-Startnummer
 
+Startnummer
 Intervall: 14- i alla 4-loppskombinationer av 7 lopp
 Resultat: Rätt (14)
-Ranknummer
 
+Ranknummer
 Intervall: -13 i alla 2-loppskombinationer av 7 lopp
 Resultat: Fel (20)
-Insatsprocent
 
+Insatsprocent
 Intervall: 10- i alla 2-loppskombinationer av loppen 4,5,6,7
 Resultat: Rätt (55)
-Vinnarodds
 
+Vinnarodds
 Intervall: -150 i alla 3-loppskombinationer av loppen 1,3,4,5,6,7
 Resultat: Rätt (23)

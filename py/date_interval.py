@@ -87,6 +87,12 @@ class DateIntervalInput:
     def get_label(self):
         return self.label
     
+    def sum_filter_iloc(self, data):
+        pass
+    
+    def interval_filter_iloc(self, data):
+        pass
+    
     def get_filter_str(self):
         pass
         min_date_str = self._min_date.strftime("%Y-%m-%d") if self._min_date else ""

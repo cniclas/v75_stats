@@ -1,7 +1,7 @@
 from flask import request
 import numpy as np
 from itertools import combinations
-from py.string_to_number import convert_string_to_number
+from string_to_number import convert_string_to_number
 
 class VectorInput:
     """

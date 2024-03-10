@@ -1,6 +1,6 @@
 from flask import request
-from py.string_to_number import convert_string_to_number
-from py.data_output import format_number
+from string_to_number import convert_string_to_number
+from data_output import format_number
 
 class IntervalInput:
     # Class variable to keep track of the count

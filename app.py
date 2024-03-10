@@ -72,14 +72,14 @@ def filter_data():
         fraction = 1
     relevant_percentage = 100 * fraction
     
-    if '8 Rätt' in df.columns:
-        scalar_html = generate_scalar_html_report(all_data, df_adv, '8 Rätt')
-        scalar_html += generate_scalar_html_report(all_data, df_adv, '7 Rätt')        
-        scalar_html += generate_scalar_html_report(all_data, df_adv, '6 Rätt')
+    if '8 Rätt' in all_data.columns:
+        scalar_html = generate_scalar_html_report(all_data, df_basic, df_adv, '8 Rätt')
+        scalar_html += generate_scalar_html_report(all_data, df_basic, df_adv, '7 Rätt')        
+        scalar_html += generate_scalar_html_report(all_data, df_basic, df_adv, '6 Rätt')
     else:
-        scalar_html = generate_scalar_html_report(all_data, df_adv, '7 Rätt')        
-        scalar_html += generate_scalar_html_report(all_data, df_adv, '6 Rätt')
-        scalar_html += generate_scalar_html_report(all_data, df_adv, '5 Rätt')
+        scalar_html = generate_scalar_html_report(all_data, df_basic, df_adv, '7 Rätt')        
+        scalar_html += generate_scalar_html_report(all_data, df_basic, df_adv, '6 Rätt')
+        scalar_html += generate_scalar_html_report(all_data, df_basic, df_adv, '5 Rätt')
     
     return render_template('index.html', selected_version=selected_version, 
                            basic_filters_html=basic_filters_html, adv_filters_html=adv_filters_html, total_data_entries=total_entries, 

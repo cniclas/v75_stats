@@ -46,14 +46,14 @@ def calc_percentage(x, xtot):
     frac = 0
   return frac * 100
 
-def generate_html_report(label, stats, nr_all_data, nr_filt_data):
+def generate_html_report(label, stats_basic, stats_adv, nr_all_data, nr_basic_filt_data, nr_adv_filt_data):
 
     html = f"""
     <div class="scalar-results"> 
-        <h2>Statistik för {label}</h2>
         <table>
             <thead>
                 <tr>
+                    <th>{label}</th>
                     <th>Omgångar</th>
                     <th>Pott total</th>
                     <th>Jackpots</th>
@@ -64,29 +64,31 @@ def generate_html_report(label, stats, nr_all_data, nr_filt_data):
             </thead>
             <tbody>
                 <tr> 
+                    <td><b>All Data</b></td>
                     <td><b>{format_number(nr_all_data)}</b></td>
-                    <td><b>{format_number(stats['all_data']['summa'])}</b></td>
-                    <td><b>{stats['all_data']['nr_jackpots']}</b></td>
-                    <td><b>{format_number(stats['all_data']['medel'])}</b></td>
-                    <td><b>{format_number(stats['all_data']['min'])}</b></td>
-                    <td><b>{format_number(stats['all_data']['max'])}</b></td>
+                    <td><b>{format_number(stats_basic['all_data']['summa'])}</b></td>
+                    <td><b>{stats_basic['all_data']['nr_jackpots']}</b></td>
+                    <td><b>{format_number(stats_basic['all_data']['medel'])}</b></td>
+                    <td><b>{format_number(stats_basic['all_data']['min'])}</b></td>
+                    <td><b>{format_number(stats_basic['all_data']['max'])}</b></td>
                 </tr>
                 <tr> 
-                    <td>{nr_filt_data}</td>
-                    <td>{format_number(stats['filt_data']['summa'])}</td>
-                    <td>{stats['filt_data']['nr_jackpots']}</td>
-                    <td>{format_number(stats['filt_data']['medel'])}</td>
-                    <td>{format_number(stats['filt_data']['min'])}</td>
-                    <td>{format_number(stats['filt_data']['max'])}</td>
-                    
+                    <td>Basic Filtered Data</td>
+                    <td>{nr_basic_filt_data} ({calc_percentage(nr_basic_filt_data, nr_all_data):.1f}%)</td>
+                    <td>{format_number(stats_basic['filt_data']['summa'])} ({calc_percentage(stats_basic['filt_data']['summa'], stats_basic['all_data']['summa']):.1f}%)</td>
+                    <td>{stats_basic['filt_data']['nr_jackpots']} ({calc_percentage(stats_basic['filt_data']['nr_jackpots'], stats_basic['all_data']['nr_jackpots']):.1f}%)</td>
+                    <td>{format_number(stats_basic['filt_data']['medel'])}</td>
+                    <td>{format_number(stats_basic['filt_data']['min'])}</td>
+                    <td>{format_number(stats_basic['filt_data']['max'])}</td>
                 </tr>
                 <tr> 
-                    <td>{calc_percentage(nr_filt_data, nr_all_data):.1f}%</td> 
-                    <td>{calc_percentage(stats['filt_data']['summa'], stats['all_data']['summa']):.1f}%</td>
-                    <td>{calc_percentage(stats['filt_data']['nr_jackpots'], stats['all_data']['nr_jackpots']):.1f}%</td>
-                    <td>{calc_percentage(stats['filt_data']['medel'], stats['all_data']['medel']):.1f}%</td>
-                    <td></td>
-                    <td></td>
+                    <td>Basic & Advanced Filtered Data</td>
+                    <td>{nr_adv_filt_data} ({calc_percentage(nr_adv_filt_data, nr_basic_filt_data):.1f}%)</td>
+                    <td>{format_number(stats_adv['filt_data']['summa'])} ({calc_percentage(stats_adv['filt_data']['summa'], stats_basic['all_data']['summa']):.1f}%)</td>
+                    <td>{stats_adv['filt_data']['nr_jackpots']} ({calc_percentage(stats_adv['filt_data']['nr_jackpots'], stats_basic['all_data']['nr_jackpots']):.1f}%)</td>
+                    <td>{format_number(stats_adv['filt_data']['medel'])}</td>
+                    <td>{format_number(stats_adv['filt_data']['min'])}</td>
+                    <td>{format_number(stats_adv['filt_data']['max'])}</td>
                 </tr>
             </tbody>
         </table>
@@ -94,7 +96,7 @@ def generate_html_report(label, stats, nr_all_data, nr_filt_data):
     """
     return html
 
-def generate_scalar_html_report(all_data, filt_data, label):
-    stats = calculate_scalar_field_statistics(all_data, filt_data, label)
-    
-    return generate_html_report(label, stats, len(all_data), len(filt_data))
+def generate_scalar_html_report(all_data, df_basic, df_adv, label):
+    stats_basic = calculate_scalar_field_statistics(all_data, df_basic, label)
+    stats_adv = calculate_scalar_field_statistics(df_basic, df_adv, label)
+    return generate_html_report(label, stats_basic, stats_adv, len(all_data), len(df_basic), len(df_adv))

@@ -92,6 +92,8 @@ def filter_iterator_2(data, basic_filters, adv_filters):
         df_basic = curr_filter.filter_data(df_basic)
         
     df_adv = df_basic
+    for curr_filter in adv_filters:
+        df_adv = curr_filter.filter_data(df_adv)
     
     return df_basic, df_adv
     

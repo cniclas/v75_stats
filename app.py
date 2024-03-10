@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from data_loader import DataLoader
-from init_template_support import init_filters
+from init_template_support import init_filters_2
 from data_output import generate_scalar_html_report
 from filter_iterator import filter_iterator
 
@@ -27,12 +27,16 @@ def load_data():
 
     data_loader.load_data(filepath)  # Load the selected data
     
-    all_filters = init_filters(data_loader.get_data())
+    basic_filters, adv_filters = init_filters_2(data_loader.get_data())
     
-    all_filters_html = ''.join(curr_filter.generate_html() for curr_filter in all_filters)
-
+    
+    basic_filters_html = ''.join(curr_filter.generate_html() for curr_filter in basic_filters)
+    adv_filters_html = ''.join(curr_filter.generate_html() for curr_filter in adv_filters)
+    
     # Process or display the loaded data as needed
-    return render_template('index.html', selected_version=selected_version, filter_inputs=all_filters_html)
+    return render_template('index.html', selected_version=selected_version, 
+                           basic_filters_html=basic_filters_html, 
+                           adv_filters_html=adv_filters_html)
 
 @app.route('/filter_data', methods=['POST'])
 def filter_data():

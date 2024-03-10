@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Data Loader</title>
-  <link rel="stylesheet" href="static/style.css"> </head>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+
 <body>
   <div class="data-loader">
     <h2>Data Loader</h2>
     <form method="POST" action="/load_data" id="load-data-form">
-      <div class="radio-group"> 
-        <input type="radio" id="v75" name="data_version" value="v75" {% if selected_version == "v75" %}checked{% endif %}>
+      <div class="radio-group">
+        <input type="radio" id="v75" name="data_version" value="v75" {% if selected_version=="v75" %}checked{% endif %}>
         <label for="v75">v75 Data</label>
-  
-        <input type="radio" id="v86" name="data_version" value="v86" {% if selected_version == "v86" %}checked{% endif %}>
+
+        <input type="radio" id="v86" name="data_version" value="v86" {% if selected_version=="v86" %}checked{% endif %}>
         <label for="v86">v86 Data</label>
-      </div> <button type="submit">Load Data</button> 
+      </div> <button type="submit">Load Data</button>
     </form>
   </div>
-  
 
   <div class="main-filter-container">
     <h2>Filtrera Data</h2>
-    <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button> 
-    <button id="all_months_toggle_button" onclick="all_months_click()">Avmarkera alla månader</button> 
+    <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button>
+    <button id="all_months_toggle_button" onclick="all_months_click()">Avmarkera alla månader</button>
     <form method="POST" action="/filter_data" id="filter-data-form">
-        {{ filter_inputs|safe }}
-        <div class="filter-button-container"> 
-          <button type="submit">Filtrera</button>
-      </div>      
+
+      <!-- Basic Filters Section -->
+      <div class="basic-filter-container">
+        <h3>Basic Filter Options</h3> <!-- Title for Basic Filters -->
+        {{ basic_filters_html|safe }}
+      </div>
+
+      <!-- Advanced Filters Section -->
+      <div class="adv-filter-container">
+        <h3>Advanced Filter Options</h3> <!-- Title for Advanced Filters -->
+        {{ adv_filters_html|safe }}
+      </div>
+
+      <div class="filter-button-container">
+        <button type="submit">Filtrera</button>
+      </div>
+
     </form>
   </div>
+
 
   <div class="main-output-container">
     {{ all_scalar_results_html|safe }}
@@ -36,4 +52,5 @@
 
   <script src="static/script.js"></script>
 </body>
+
 </html>

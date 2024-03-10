@@ -13,7 +13,7 @@ def is_interval_jackpot(fieldname):
     return fieldname in interval_fields
 
 def is_vector_field(fieldname):
-    vector_fields = ['Startnummer', 'Ranknummer', 'Instatsprocent', 'Vinnarodds']
+    vector_fields = ['Startnummer', 'Ranknummer', 'Insatsprocent', 'Vinnarodds']
     return fieldname in vector_fields
 
 def is_bana_field(fieldname):
@@ -115,7 +115,7 @@ def init_filters_2(data):
     else:
         nr_max = 7
     
-    adv_filters_names = ['Startnummer', 'Ranknummer', 'Instatsprocent', 'Vinnarodds']
+    adv_filters_names = ['Startnummer', 'Ranknummer', 'Insatsprocent', 'Vinnarodds']
     adv_filters = []
     for name in adv_filters_names:
         current_filter = VectorInput(name, nr_max)

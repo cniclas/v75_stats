@@ -59,13 +59,13 @@ def filter_data():
     adv_filters_html = ''.join(curr_filter.generate_html() for curr_filter in adv_filters)
 
     all_data = data_loader.get_data()
-    df = filter_iterator(all_data, all_filters)
+    #df = filter_iterator(all_data, all_filters)
     
     df_basic, df_adv = filter_iterator_2(all_data, basic_filters, adv_filters)
     
     # Calculate fraction of all avaialble data that is relevant
     total_entries = len(all_data)
-    relevant_entries = len(df)
+    relevant_entries = len(df_basic)
     if total_entries > 0:
         fraction = round(relevant_entries / total_entries, 2)
     else:

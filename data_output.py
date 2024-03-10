@@ -83,9 +83,9 @@ def generate_html_report(label, stats_basic, stats_adv, nr_all_data, nr_basic_fi
                 </tr>
                 <tr> 
                     <td>Basic & Advanced Filtered Data</td>
-                    <td>{nr_adv_filt_data} ({calc_percentage(nr_adv_filt_data, nr_basic_filt_data):.1f}%)</td>
-                    <td>{format_number(stats_adv['filt_data']['summa'])} ({calc_percentage(stats_adv['filt_data']['summa'], stats_basic['all_data']['summa']):.1f}%)</td>
-                    <td>{stats_adv['filt_data']['nr_jackpots']} ({calc_percentage(stats_adv['filt_data']['nr_jackpots'], stats_basic['all_data']['nr_jackpots']):.1f}%)</td>
+                    <td>{nr_adv_filt_data} ({calc_percentage(nr_adv_filt_data, nr_basic_filt_data):.1f}%)({calc_percentage(nr_adv_filt_data, nr_all_data):.1f}%)</td>
+                    <td>{format_number(stats_adv['filt_data']['summa'])} ({calc_percentage(stats_adv['filt_data']['summa'], stats_basic['all_data']['summa']):.1f}%)({calc_percentage(stats_adv['filt_data']['summa'], stats_basic['all_data']['summa']):.1f}%)</td>
+                    <td>{stats_adv['filt_data']['nr_jackpots']} ({calc_percentage(stats_adv['filt_data']['nr_jackpots'], stats_basic['all_data']['nr_jackpots']):.1f}%)({calc_percentage(stats_adv['filt_data']['nr_jackpots'], stats_basic['all_data']['nr_jackpots']):.1f}%)</td>
                     <td>{format_number(stats_adv['filt_data']['medel'])}</td>
                     <td>{format_number(stats_adv['filt_data']['min'])}</td>
                     <td>{format_number(stats_adv['filt_data']['max'])}</td>

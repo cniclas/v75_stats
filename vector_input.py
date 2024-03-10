@@ -165,7 +165,7 @@ class VectorInput:
         return sums
     
     def sum_filter(self, data):
-        relevant_rows = self.sum_filter_iloc(self, data)
+        relevant_rows = self.sum_filter_iloc(data)
         return data.iloc[relevant_rows]  
         
     def filter_data(self, data):

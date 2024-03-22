@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from data_loader import DataLoader
-from init_template_support import init_filters_2
+from init_template_support import init_filters
 from data_output import generate_scalar_html_report
-from filter_iterator import filter_iterator, filter_iterator_2
+from filter_iterator import filter_iterator
+from array_sum_interval_filter import ArraySumIntervalFilter
 
 app = Flask(__name__)
 
@@ -39,7 +40,7 @@ def load_data():
 
     data_loader.load_data(filepath)  # Load the selected data
     
-    basic_filters, adv_filters = init_filters_2(data_loader.get_data())
+    basic_filters, adv_filters = init_filters(data_loader.get_data())
     
     basic_filters_html = ''.join(curr_filter.generate_html() for curr_filter in basic_filters)
     adv_filters_html = ''.join(curr_filter.generate_html() for curr_filter in adv_filters)
@@ -59,9 +60,8 @@ def filter_data():
     adv_filters_html = ''.join(curr_filter.generate_html() for curr_filter in adv_filters)
 
     all_data = data_loader.get_data()
-    #df = filter_iterator(all_data, all_filters)
     
-    df_basic, df_adv = filter_iterator_2(all_data, basic_filters, adv_filters)
+    df_basic, df_adv = filter_iterator(all_data, basic_filters, adv_filters)
     
     # Calculate fraction of all avaialble data that is relevant
     total_entries = len(all_data)
@@ -85,7 +85,34 @@ def filter_data():
                            basic_filters_html=basic_filters_html, adv_filters_html=adv_filters_html, total_data_entries=total_entries, 
                            relevant_percentage=relevant_percentage, all_scalar_results_html=scalar_html)
             
+@app.route('/add_startnummer', methods=['POST'])
+def add_startnummer():
+    global adv_filters, data_loader
+    nr_elements = data_loader.get_number_of_race_elements()
+    adv_filters.append(ArraySumIntervalFilter('Startnummer', nr_elements))
     
+    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
+    
+    # Return just the HTML snippet
+    return jsonify({'adv_filters_html': adv_filters_html})
+
+@app.route('/add_ranknummer', methods=['POST'])
+def add_ranknummer():
+    data = request.json
+    # Your logic to create a new object
+    return jsonify({'message': 'Ranknummer added successfully'})
+
+@app.route('/add_instatsprocent', methods=['POST'])
+def add_instatsprocent():
+    data = request.json
+    # Your logic to create a new object
+    return jsonify({'message': 'Insatsprocent added successfully'})
+
+@app.route('/add_vinnarodds', methods=['POST'])
+def add_vinnarodds():
+    data = request.json
+    # Your logic to create a new object
+    return jsonify({'message': 'Vinnarodds added successfully'})
 
 if __name__ == '__main__':
     app.run(debug=True)

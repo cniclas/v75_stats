@@ -47,6 +47,57 @@ function all_months_click() {
     localStorage.setItem('allMonthsState', allMonthsState);
 }
 
+function sendDataToBackend(url, html_code, callback) {
+    console.log('Sending data to backend.. :)D)');
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(html_code),
+    })
+    .then(response => response.json())
+    .then(html_code => {
+        console.log('Success:', html_code);
+        if (callback) {
+            callback(html_code);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function add_startnummer() {
+    sendDataToBackend('/add_startnummer', {action: 'startnummer'}, updatePageWithHTML);
+}
+
+function updatePageWithHTML(html_code) {
+    // Get the container where the objects should be added
+    const container = document.getElementById('adv-filter-list-id');
+    // Create a new element for the object
+    const objectElement = document.createElement('div');
+
+    objectElement.innerHTML = html_code  // Set the inner HTML to the snippet received from the backend
+    // Append the new element to the container
+    container.appendChild(objectElement);
+}
+
+function add_ranknummer() {
+    sendDataToBackend('/add_ranknummer', {action: 'ranknummer'});
+}
+
+function add_instatsprocent() {
+    sendDataToBackend('/add_instatsprocent', {action: 'instatsprocent'});
+}
+
+function add_vinnarodds() {
+    sendDataToBackend('/add_vinnarodds', {action: 'vinnarodds'});
+}
+
+
+
+
 window.onload = function() {  
     // Banor Button State
     const banorButton = document.getElementById('alla_banor_toggle_button');

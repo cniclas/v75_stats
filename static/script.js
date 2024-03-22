@@ -72,15 +72,11 @@ function add_startnummer() {
     sendDataToBackend('/add_startnummer', {action: 'startnummer'}, updatePageWithHTML);
 }
 
-function updatePageWithHTML(html_code) {
+function updatePageWithHTML(data) {
     // Get the container where the objects should be added
     const container = document.getElementById('adv-filter-list-id');
     // Create a new element for the object
-    const objectElement = document.createElement('div');
-
-    objectElement.innerHTML = html_code  // Set the inner HTML to the snippet received from the backend
-    // Append the new element to the container
-    container.appendChild(objectElement);
+    container.innerHTML = data.adv_filters_html  // Set the inner HTML to the snippet received from the backend
 }
 
 function add_ranknummer() {

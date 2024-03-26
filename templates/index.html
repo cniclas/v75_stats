@@ -27,9 +27,6 @@
     <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button>
     <button id="all_months_toggle_button" onclick="all_months_click()">Avmarkera alla månader</button>
     <button id="Startnummer_add_button" onclick="add_startnummer()">Button 1</button>
-    <button id="Ranknummer_add_button" onclick="add_ranknummer()">Button 2</button>
-    <button id="Insatsprocent_add_button" onclick="add_instatsprocent()">Button 3</button>
-    <button id="Vinnarodds_add_button" onclick="add_vinnarodds()">Button 4</button>
     
     <form method="POST" action="/filter_data" id="filter-data-form">
 
@@ -42,6 +39,39 @@
       <!-- Advanced Filters Section -->
       <div class="adv-filter-container">
         <h3>Advanced Filter Options</h3> <!-- Title for Advanced Filters -->
+
+        <style>
+          .inline-element {
+            display: inline-block;
+            margin-right: 10px; /* Adds some space between the elements */
+            vertical-align: middle; /* Aligns elements vertically */
+          }
+          /* Optional: Style the button to match the inline layout */
+          .add-button {
+            vertical-align: middle;
+          }
+        </style>
+
+        <div class="inline-element">
+          <label for="filter-select">Lägg till filter:   </label>
+          <select id="filter-select" name="filters">
+            <option value="Startnummer">Startnummer</option>
+            <option value="Ranknummer">Ranknummer</option>
+            <option value="Insatsprocent">Insatsprocent</option>
+            <option value="Vinnarodds">Vinnarodds</option>
+          </select>
+        </div>
+
+        <div class="inline-element radio-group">
+          <input type="radio" id="sum_interval_opt" name="option" value="A" checked>
+          <label for="sum_interval_opt">Summa intervall</label>
+
+          <input type="radio" id="interval_opt" name="option" value="B">
+          <label for="interval_opt">Intervall</label>
+        </div>
+
+        <button type="button" class="add-button" onclick="addFilter()">Lägg till filter</button>
+
         <div class="adv-filter-list" id="adv-filter-list-id">
           {{ adv_filters_html|safe }}
         </div>

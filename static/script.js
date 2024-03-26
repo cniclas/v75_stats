@@ -68,9 +68,16 @@ function sendDataToBackend(url, data, callback) {
     });
 }
 
-function add_startnummer() {
-    sendDataToBackend('/add_startnummer', {action: 'startnummer'}, updatePageWithHTML);
-}
+function addFilter() {
+    // Get the selected value from the dropdown
+    var selectedFilter = document.getElementById('filter-select').value;
+
+    // Get the selected radio button value
+    var selectedOption = document.querySelector('input[name="option"]:checked').value;
+
+    // Here you can add your logic to use the selected values as needed
+    sendDataToBackend('/add_filter', {selectedFilter: selectedFilter, selectedOption: selectedOption}, updatePageWithHTML);
+}  
 
 function updatePageWithHTML(data) {
     // Get the container where the objects should be added
@@ -79,25 +86,13 @@ function updatePageWithHTML(data) {
     container.innerHTML = data.adv_filters_html  // Set the inner HTML to the snippet received from the backend
 }
 
+function add_startnummer() {
+    sendDataToBackend('/add_startnummer', {action: 'startnummer'}, updatePageWithHTML);
+}
+
 function deleteFilterObject(filterId){
-    alert(`Filter id is: ${filterId}`);
     sendDataToBackend('/delete_filter', {action: filterId}, updatePageWithHTML);
 }
-
-function add_ranknummer() {
-    sendDataToBackend('/add_ranknummer', {action: 'ranknummer'});
-}
-
-function add_instatsprocent() {
-    sendDataToBackend('/add_instatsprocent', {action: 'instatsprocent'});
-}
-
-function add_vinnarodds() {
-    sendDataToBackend('/add_vinnarodds', {action: 'vinnarodds'});
-}
-
-
-
 
 window.onload = function() {  
     // Banor Button State

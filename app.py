@@ -96,6 +96,26 @@ def add_startnummer():
     # Return just the HTML snippet
     return jsonify({'adv_filters_html': adv_filters_html})
 
+from flask import request, jsonify
+
+@app.route('/add_filter', methods=['POST'])
+def add_filter():
+    global adv_filters, data_loader
+    # Extracting the selected filter and option from the POST request
+    selected_filter = request.json.get('selectedFilter')
+    selected_option = request.json.get('selectedOption')
+
+    nr_elements = data_loader.get_number_of_race_elements()
+    
+    if selected_option == 'A':
+        adv_filters.append(ArraySumIntervalFilter(selected_filter, nr_elements))
+    
+    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
+    
+    # Return just the HTML snippet
+    return jsonify({'adv_filters_html': adv_filters_html})
+
+
 @app.route('/delete_filter', methods=['POST'])
 def delete_filter():
     global adv_filters
@@ -107,24 +127,6 @@ def delete_filter():
     
     # Return just the HTML snippet
     return jsonify({'adv_filters_html': adv_filters_html})
-
-@app.route('/add_ranknummer', methods=['POST'])
-def add_ranknummer():
-    data = request.json
-    # Your logic to create a new object
-    return jsonify({'message': 'Ranknummer added successfully'})
-
-@app.route('/add_instatsprocent', methods=['POST'])
-def add_instatsprocent():
-    data = request.json
-    # Your logic to create a new object
-    return jsonify({'message': 'Insatsprocent added successfully'})
-
-@app.route('/add_vinnarodds', methods=['POST'])
-def add_vinnarodds():
-    data = request.json
-    # Your logic to create a new object
-    return jsonify({'message': 'Vinnarodds added successfully'})
 
 if __name__ == '__main__':
     app.run(debug=True)

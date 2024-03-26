@@ -47,6 +47,53 @@ function all_months_click() {
     localStorage.setItem('allMonthsState', allMonthsState);
 }
 
+function sendDataToBackend(url, data, callback) {
+    console.log('Sending data to backend.. :)D)');
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        if (callback) {
+            callback(data);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function addFilter() {
+    // Get the selected value from the dropdown
+    var selectedFilter = document.getElementById('filter-select').value;
+
+    // Get the selected radio button value
+    var selectedOption = document.querySelector('input[name="option"]:checked').value;
+
+    // Here you can add your logic to use the selected values as needed
+    sendDataToBackend('/add_filter', {selectedFilter: selectedFilter, selectedOption: selectedOption}, updatePageWithHTML);
+}  
+
+function updatePageWithHTML(data) {
+    // Get the container where the objects should be added
+    const container = document.getElementById('adv-filter-list-id');
+    // Create a new element for the object
+    container.innerHTML = data.adv_filters_html  // Set the inner HTML to the snippet received from the backend
+}
+
+function add_startnummer() {
+    sendDataToBackend('/add_startnummer', {action: 'startnummer'}, updatePageWithHTML);
+}
+
+function deleteFilterObject(filterId){
+    sendDataToBackend('/delete_filter', {action: filterId}, updatePageWithHTML);
+}
+
 window.onload = function() {  
     // Banor Button State
     const banorButton = document.getElementById('alla_banor_toggle_button');

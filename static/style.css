@@ -142,3 +142,29 @@
 .scalar-results tr:first-child td { 
   font-weight: bold;            /* Bold for the 'All Data' row */
 }
+
+.filter-addition-row {
+  display: flex; /* Align children in a row */
+  align-items: center; /* Vertically center the children */
+  border: 1px solid black; /* Thin black border around the row */
+  padding: 10px; /* Padding inside the row for some space */
+  margin-bottom: 20px; /* Space below the row */
+}
+
+.inline-element {
+  margin-right: 10px; /* Space between inline elements */
+}
+
+.add-button {
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove button border */
+  padding: 5px 10px; /* Button padding */
+  border-radius: 3px; /* Slightly rounded button corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.add-button:hover {
+  background-color: #0056b3; /* Darker background color on hover */
+}
+

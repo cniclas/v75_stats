@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from data_loader import DataLoader
-from init_template_support import init_filters_2
+from init_template_support import init_filters
 from data_output import generate_scalar_html_report
-from filter_iterator import filter_iterator, filter_iterator_2
+from filter_iterator import filter_iterator
+from array_sum_interval_filter import ArraySumIntervalFilter
+from array_interval_filter import ArrayIntervalFilter
 
 app = Flask(__name__)
 
@@ -39,7 +41,7 @@ def load_data():
 
     data_loader.load_data(filepath)  # Load the selected data
     
-    basic_filters, adv_filters = init_filters_2(data_loader.get_data())
+    basic_filters, adv_filters = init_filters(data_loader.get_data())
     
     basic_filters_html = ''.join(curr_filter.generate_html() for curr_filter in basic_filters)
     adv_filters_html = ''.join(curr_filter.generate_html() for curr_filter in adv_filters)
@@ -59,9 +61,8 @@ def filter_data():
     adv_filters_html = ''.join(curr_filter.generate_html() for curr_filter in adv_filters)
 
     all_data = data_loader.get_data()
-    #df = filter_iterator(all_data, all_filters)
     
-    df_basic, df_adv = filter_iterator_2(all_data, basic_filters, adv_filters)
+    df_basic, df_adv = filter_iterator(all_data, basic_filters, adv_filters)
     
     # Calculate fraction of all avaialble data that is relevant
     total_entries = len(all_data)
@@ -85,7 +86,50 @@ def filter_data():
                            basic_filters_html=basic_filters_html, adv_filters_html=adv_filters_html, total_data_entries=total_entries, 
                            relevant_percentage=relevant_percentage, all_scalar_results_html=scalar_html)
             
+@app.route('/add_startnummer', methods=['POST'])
+def add_startnummer():
+    global adv_filters, data_loader
+    nr_elements = data_loader.get_number_of_race_elements()
+    adv_filters.append(ArraySumIntervalFilter('Startnummer', nr_elements))
     
+    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
+    
+    # Return just the HTML snippet
+    return jsonify({'adv_filters_html': adv_filters_html})
+
+from flask import request, jsonify
+
+@app.route('/add_filter', methods=['POST'])
+def add_filter():
+    global adv_filters, data_loader
+    # Extracting the selected filter and option from the POST request
+    selected_filter = request.json.get('selectedFilter')
+    selected_option = request.json.get('selectedOption')
+
+    nr_elements = data_loader.get_number_of_race_elements()
+    
+    if selected_option == 'A':
+        adv_filters.append(ArraySumIntervalFilter(selected_filter, nr_elements))
+    else:
+        adv_filters.append(ArrayIntervalFilter(selected_filter, nr_elements))
+    
+    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
+    
+    # Return just the HTML snippet
+    return jsonify({'adv_filters_html': adv_filters_html})
+
+
+@app.route('/delete_filter', methods=['POST'])
+def delete_filter():
+    global adv_filters
+    # Logic to delete the filter object with the given filter_id
+    data = request.json
+    filter_id = int(data.get('action'))
+    adv_filters = [obj for obj in adv_filters if obj.get_unique_id() != filter_id]
+    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
+    
+    # Return just the HTML snippet
+    return jsonify({'adv_filters_html': adv_filters_html})
 
 if __name__ == '__main__':
     app.run(debug=True)

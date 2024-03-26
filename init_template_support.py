@@ -40,50 +40,8 @@ def gather_type_of_filters(data, label):
     # 
     # 
     pass
-    
 
 def init_filters(data):
-    all_filters = []
-    all_fields = data.columns.tolist()
-    if '8 Rätt' in all_fields:
-        nr_max = 8
-    else:
-        nr_max = 7
-    
-    all_filters = []
-    basic_filters = []
-    adv_filters = []
-    for name in all_fields:
-        filter_type = determine_filter_type(name)
-        
-        if filter_type == 'bana':
-            available_locs = data['Bana'].unique()
-            current_filter = LocationInput(name, available_locs)
-            all_filters.append(current_filter)
-            basic_filters.append(current_filter)
-        elif filter_type == 'date':
-            oldest_date = data['Datum'].min()
-            newest_date = data['Datum'].max()
-            current_filter = DateIntervalInput(name, oldest_date, newest_date)
-            all_filters.append(current_filter)
-            basic_filters.append(current_filter)
-        elif filter_type == 'interval':
-            current_filter = IntervalInput(name)
-            all_filters.append(current_filter)
-            basic_filters.append(current_filter)
-        elif filter_type == 'jackpot':
-            current_filter = IntervalInputJackpot(name)
-            all_filters.append(current_filter)
-            basic_filters.append(current_filter)
-            
-        elif filter_type == 'vector':
-            current_filter = VectorInput(name, nr_max)
-            all_filters.append(current_filter)
-            adv_filters.append(current_filter)
-        
-    return all_filters
-
-def init_filters_2(data):
     
     if '8 Rätt' in data.columns.tolist():
         basic_filters_names = ['Bana', 'Datum', '8 Rätt', '7 Rätt', '6 Rätt', 'Omsättning', 'Antal System']
@@ -117,8 +75,8 @@ def init_filters_2(data):
     
     adv_filters_names = ['Startnummer', 'Ranknummer', 'Insatsprocent', 'Vinnarodds']
     adv_filters = []
-    for name in adv_filters_names:
-        current_filter = VectorInput(name, nr_max)
-        adv_filters.append(current_filter)
+    # for name in adv_filters_names:
+    #     current_filter = VectorInput(name, nr_max)
+    #     adv_filters.append(current_filter)
         
     return basic_filters, adv_filters

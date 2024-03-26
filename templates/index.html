@@ -22,8 +22,12 @@
 
   <div class="main-filter-container">
     <h2>Filtrera Data</h2>
+
+    <!-- Place all buttons outside of the form. Otherwise they are triggered on form update -->
     <button id="alla_banor_toggle_button" onclick="alla_banor_click()">Avmarkera alla banor</button>
     <button id="all_months_toggle_button" onclick="all_months_click()">Avmarkera alla månader</button>
+    <button id="Startnummer_add_button" onclick="add_startnummer()">Button 1</button>
+    
     <form method="POST" action="/filter_data" id="filter-data-form">
 
       <!-- Basic Filters Section -->
@@ -35,8 +39,35 @@
       <!-- Advanced Filters Section -->
       <div class="adv-filter-container">
         <h3>Advanced Filter Options</h3> <!-- Title for Advanced Filters -->
-        {{ adv_filters_html|safe }}
+
+        <div class="filter-addition-row">
+          <div class="inline-element">
+            <label for="filter-select">Lägg till filter: </label>
+            <select id="filter-select" name="filters">
+              <option value="Startnummer">Startnummer</option>
+              <option value="Ranknummer">Ranknummer</option>
+              <option value="Insatsprocent">Insatsprocent</option>
+              <option value="Vinnarodds">Vinnarodds</option>
+            </select>
+          </div>
+
+          <div class="inline-element radio-group">
+            <input type="radio" id="sum_interval_opt" name="option" value="A" checked>
+            <label for="sum_interval_opt">Summa intervall</label>
+
+            <input type="radio" id="interval_opt" name="option" value="B">
+            <label for="interval_opt">Intervall</label>
+          </div>
+
+          <button type="button" class="add-button" onclick="addFilter()">Lägg till filter</button>
+        </div>
+
+        <div class="adv-filter-list" id="adv-filter-list-id">
+          {{ adv_filters_html|safe }}
+        </div>
       </div>
+
+
 
       <div class="filter-button-container">
         <button type="submit">Filtrera</button>

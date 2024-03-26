@@ -40,42 +40,34 @@
       <div class="adv-filter-container">
         <h3>Advanced Filter Options</h3> <!-- Title for Advanced Filters -->
 
-        <style>
-          .inline-element {
-            display: inline-block;
-            margin-right: 10px; /* Adds some space between the elements */
-            vertical-align: middle; /* Aligns elements vertically */
-          }
-          /* Optional: Style the button to match the inline layout */
-          .add-button {
-            vertical-align: middle;
-          }
-        </style>
+        <div class="filter-addition-row">
+          <div class="inline-element">
+            <label for="filter-select">Lägg till filter: </label>
+            <select id="filter-select" name="filters">
+              <option value="Startnummer">Startnummer</option>
+              <option value="Ranknummer">Ranknummer</option>
+              <option value="Insatsprocent">Insatsprocent</option>
+              <option value="Vinnarodds">Vinnarodds</option>
+            </select>
+          </div>
 
-        <div class="inline-element">
-          <label for="filter-select">Lägg till filter:   </label>
-          <select id="filter-select" name="filters">
-            <option value="Startnummer">Startnummer</option>
-            <option value="Ranknummer">Ranknummer</option>
-            <option value="Insatsprocent">Insatsprocent</option>
-            <option value="Vinnarodds">Vinnarodds</option>
-          </select>
+          <div class="inline-element radio-group">
+            <input type="radio" id="sum_interval_opt" name="option" value="A" checked>
+            <label for="sum_interval_opt">Summa intervall</label>
+
+            <input type="radio" id="interval_opt" name="option" value="B">
+            <label for="interval_opt">Intervall</label>
+          </div>
+
+          <button type="button" class="add-button" onclick="addFilter()">Lägg till filter</button>
         </div>
-
-        <div class="inline-element radio-group">
-          <input type="radio" id="sum_interval_opt" name="option" value="A" checked>
-          <label for="sum_interval_opt">Summa intervall</label>
-
-          <input type="radio" id="interval_opt" name="option" value="B">
-          <label for="interval_opt">Intervall</label>
-        </div>
-
-        <button type="button" class="add-button" onclick="addFilter()">Lägg till filter</button>
 
         <div class="adv-filter-list" id="adv-filter-list-id">
           {{ adv_filters_html|safe }}
         </div>
       </div>
+
+
 
       <div class="filter-button-container">
         <button type="submit">Filtrera</button>

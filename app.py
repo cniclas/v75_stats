@@ -4,6 +4,7 @@ from init_template_support import init_filters
 from data_output import generate_scalar_html_report
 from filter_iterator import filter_iterator
 from array_sum_interval_filter import ArraySumIntervalFilter
+from array_interval_filter import ArrayIntervalFilter
 
 app = Flask(__name__)
 
@@ -109,6 +110,8 @@ def add_filter():
     
     if selected_option == 'A':
         adv_filters.append(ArraySumIntervalFilter(selected_filter, nr_elements))
+    else:
+        adv_filters.append(ArrayIntervalFilter(selected_filter, nr_elements))
     
     adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
     

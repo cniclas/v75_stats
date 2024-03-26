@@ -2,7 +2,7 @@ from flask import request
 import numpy as np
 from itertools import combinations
 from string_to_number import convert_string_to_number
-from general_support import limit_value_zero, limit_value_one, get_relevant_column, get_relevant_elements
+from general_support import limit_value_zero, get_relevant_column, get_relevant_elements
 
 class ArrayIntervalFilter:
     
@@ -56,9 +56,9 @@ class ArrayIntervalFilter:
         self.interval_filter_options["max_interval"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_max_interval", ""), 2**64)
         
         self.interval_filter_options["min_race"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_min_race", ""), 0)
-        self.interval_filter_options["min_race"] = self.limit_value_zero(self.interval_filter_options["min_race"])
+        self.interval_filter_options["min_race"] = limit_value_zero(self.interval_filter_options["min_race"], self.nr_elements)
         self.interval_filter_options["max_race"] = convert_string_to_number(request.form.get(f"{self.label}{self.unique_id}_max_race", ""), 2**64)
-        self.interval_filter_options["max_race"] = self.limit_value_zero(self.interval_filter_options["max_race"])
+        self.interval_filter_options["max_race"] = limit_value_zero(self.interval_filter_options["max_race"], self.nr_elements)
         
         selected_elements = []
         for i in range(1, self.nr_elements + 1):
@@ -67,12 +67,12 @@ class ArrayIntervalFilter:
                 selected_elements.append(int(i))  # Cast to int for consistency
         self.interval_filter_options["selected_elements"] = selected_elements
 
-    def filter(self, data):
+    def filter_data(self, data):
         relevant_rows = self.interval_filter_iloc(data)
         return data.iloc[relevant_rows]
     
     def interval_filter_iloc(self, data):
-        relevant_data = self.get_relevant_column(data)
+        relevant_data = get_relevant_column(data, self.label)
         relevant_idxs = [i - 1 for i in self.interval_filter_options['selected_elements']]
 
         min_limit = self.interval_filter_options['min_interval']
@@ -82,7 +82,7 @@ class ArrayIntervalFilter:
         relevant_rows = []
         for row_idx, row in enumerate(relevant_data):
             hit_count = 0
-            rel_data = self.get_relevant_elements(row, relevant_idxs)
+            rel_data = get_relevant_elements(row, relevant_idxs)
 
             for col in rel_data:
                 if col >= min_limit and col <= max_limit:

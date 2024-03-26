@@ -85,19 +85,6 @@ def filter_data():
     return render_template('index.html', selected_version=selected_version, 
                            basic_filters_html=basic_filters_html, adv_filters_html=adv_filters_html, total_data_entries=total_entries, 
                            relevant_percentage=relevant_percentage, all_scalar_results_html=scalar_html)
-            
-@app.route('/add_startnummer', methods=['POST'])
-def add_startnummer():
-    global adv_filters, data_loader
-    nr_elements = data_loader.get_number_of_race_elements()
-    adv_filters.append(ArraySumIntervalFilter('Startnummer', nr_elements))
-    
-    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
-    
-    # Return just the HTML snippet
-    return jsonify({'adv_filters_html': adv_filters_html})
-
-from flask import request, jsonify
 
 @app.route('/add_filter', methods=['POST'])
 def add_filter():

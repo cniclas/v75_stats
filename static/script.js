@@ -86,10 +86,6 @@ function updatePageWithHTML(data) {
     container.innerHTML = data.adv_filters_html  // Set the inner HTML to the snippet received from the backend
 }
 
-function add_startnummer() {
-    sendDataToBackend('/add_startnummer', {action: 'startnummer'}, updatePageWithHTML);
-}
-
 function deleteFilterObject(filterId){
     sendDataToBackend('/delete_filter', {action: filterId}, updatePageWithHTML);
 }

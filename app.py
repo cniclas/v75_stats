@@ -96,6 +96,18 @@ def add_startnummer():
     # Return just the HTML snippet
     return jsonify({'adv_filters_html': adv_filters_html})
 
+@app.route('/delete_filter', methods=['POST'])
+def delete_filter():
+    global adv_filters
+    # Logic to delete the filter object with the given filter_id
+    data = request.json
+    filter_id = int(data.get('action'))
+    adv_filters = [obj for obj in adv_filters if obj.get_unique_id() != filter_id]
+    adv_filters_html = ''.join([filt.generate_html() for filt in adv_filters])
+    
+    # Return just the HTML snippet
+    return jsonify({'adv_filters_html': adv_filters_html})
+
 @app.route('/add_ranknummer', methods=['POST'])
 def add_ranknummer():
     data = request.json

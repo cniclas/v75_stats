@@ -18,6 +18,9 @@ class ArraySumIntervalFilter:
             "in_nr_races": self.nr_elements,
             "selected_elements": list(range(1, nr_elements + 1))  # Initially all elements selected
         }
+        
+    def get_unique_id(self):
+        return self.unique_id
 
     def generate_html(self):
         max_sum_str = self.sum_filter_options['max_sum']
@@ -26,7 +29,7 @@ class ArraySumIntervalFilter:
             
         sum_html = f"""
         <div class="adv-filter-single-container">
-            <label for="{self.label}{self.unique_id}_sum_min">Summa Intervall, Unique Id: {self.unique_id}</label>
+            <label for="{self.label}{self.unique_id}_sum_min">{self.label} Summa Intervall, Unique Id: {self.unique_id}</label>
             <input type="number" id="{self.label}{self.unique_id}_sum_min" name="{self.label}{self.unique_id}_min_sum" step="any" placeholder="0" value="{self.sum_filter_options['min_sum']}" style="width: 50px; height: 25px; padding: 5px;">
             -
             <input type="number" id="{self.label}{self.unique_id}_sum_max" name="{self.label}{self.unique_id}_max_sum" step="any" placeholder="Max" value="{max_sum_str}" style="width: 50px; height: 25px; padding: 5px;">
@@ -42,6 +45,7 @@ class ArraySumIntervalFilter:
                 <input type="checkbox" id="{self.label}{self.unique_id}_sum_element_{i}" name="{self.label}{self.unique_id}_sum_elements_{i}" value="{i}" {checked}>
             </span>
         """
+        sum_html += f"""<button type="button" onclick="deleteFilterObject({self.unique_id})">Delete</button>"""
         sum_html += "</div>"
         return sum_html
     

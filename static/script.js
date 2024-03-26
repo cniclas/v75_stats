@@ -47,20 +47,20 @@ function all_months_click() {
     localStorage.setItem('allMonthsState', allMonthsState);
 }
 
-function sendDataToBackend(url, html_code, callback) {
+function sendDataToBackend(url, data, callback) {
     console.log('Sending data to backend.. :)D)');
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(html_code),
+        body: JSON.stringify(data),
     })
     .then(response => response.json())
-    .then(html_code => {
-        console.log('Success:', html_code);
+    .then(data => {
+        console.log('Success:', data);
         if (callback) {
-            callback(html_code);
+            callback(data);
         }
     })
     .catch((error) => {
@@ -77,6 +77,11 @@ function updatePageWithHTML(data) {
     const container = document.getElementById('adv-filter-list-id');
     // Create a new element for the object
     container.innerHTML = data.adv_filters_html  // Set the inner HTML to the snippet received from the backend
+}
+
+function deleteFilterObject(filterId){
+    alert(`Filter id is: ${filterId}`);
+    sendDataToBackend('/delete_filter', {action: filterId}, updatePageWithHTML);
 }
 
 function add_ranknummer() {
